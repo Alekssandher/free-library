@@ -8,8 +8,6 @@ public class UserDto {
     private String email;   
     private String password;
 
-    public UserDto() {}
-
     public UserDto(String name, String email, String password) {
         this.name = name;
         this.email = email;
