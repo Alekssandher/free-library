@@ -1,26 +1,38 @@
 package free_library.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @Entity(name = "tb_user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserModel {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long publicId;
     
-    private String name; 
-    private String email;   
+    private UUID publicId = UUID.randomUUID(); 
+    
+    private String name;
+    private String email;
+    
+    @JsonIgnore
     private String password;
     
-    private LocalDateTime createdAt; 
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    public UserModel(String name, String email, String password) {
+        this.publicId = UUID.randomUUID();
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.createdAt = LocalDateTime.now();
+    }
 }

@@ -1,7 +1,8 @@
 package free_library.service;
 
-import free_library.dto.UserDto;
+import free_library.dto.user.*;
 
 public interface UserService{
-    UserDto findByEmail(String email);
+    UserResponseDto create(UserDto user);
+    UserResponseDto findByEmail(String email);
 }
