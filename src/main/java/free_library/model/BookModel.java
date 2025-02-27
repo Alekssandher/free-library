@@ -8,14 +8,14 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "books")
+@Table(name = "tb_books")
 public class BookModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID publicId;
+    private String publicId;
 
     @Column(nullable = false)
     private String title;
@@ -37,7 +37,7 @@ public class BookModel {
 
     public BookModel( String title, String author, LocalDate publishedAt, String language, String summary, String category)
     {
-        this.publicId = UUID.randomUUID();
+        this.publicId = UUID.randomUUID().toString();
         this.title = title;
         this.author = author;
         this.publishedAt = publishedAt;

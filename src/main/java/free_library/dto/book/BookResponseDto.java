@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class BookResponseDto {
     
-    private UUID id;
+    private String id;
     private String title;
     private String author;
     
@@ -24,7 +24,7 @@ public class BookResponseDto {
     public BookResponseDto() {
     }
 
-    public BookResponseDto(UUID id, String title, String author, LocalDate publishedAt, String language, String summary, String category) {
+    public BookResponseDto(String id, String title, String author, LocalDate publishedAt, String language, String summary, String category) {
         this.id = id;
         this.title = title;
         this.author = author;
