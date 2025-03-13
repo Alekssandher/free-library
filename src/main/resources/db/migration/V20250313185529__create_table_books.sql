@@ -1,0 +1,11 @@
+CREATE TABLE BOOKS (
+    id BIGSERIAL PRIMARY KEY,
+    public_id BIGINT UNIQUE NOT NULL, 
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255),
+    description TEXT,
+    file_path VARCHAR(500) NOT NULL, 
+    uploaded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    uploaded_by BIGINT NOT NULL, 
+    CONSTRAINT FK_BOOK_UPLOADER FOREIGN KEY (uploaded_by) REFERENCES USERS (public_id)
+);

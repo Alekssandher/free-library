@@ -1,0 +1,14 @@
+CREATE TYPE user_role AS ENUM ('MANAGER', 'USER');
+
+CREATE TABLE USERS(
+    id BIGSERIAL PRIMARY KEY,
+    public_id BIGINT UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(150),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN,
+    is_verified BOOLEAN,
+    role user_role NOT NULL DEFAULT 'USER',
+    CONSTRAINT UK_EMAIL  UNIQUE (email)
+);
