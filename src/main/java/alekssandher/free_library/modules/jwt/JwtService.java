@@ -1,4 +1,4 @@
-package alekssandher.free_library.service.impl;
+package alekssandher.free_library.modules.jwt;
 
 import java.time.Instant;
 

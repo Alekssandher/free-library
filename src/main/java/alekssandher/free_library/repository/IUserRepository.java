@@ -14,4 +14,5 @@ public interface IUserRepository extends JpaRepository<UserModel, Long>{
     
     List<UserModel> findTop10ByNameContainingIgnoreCase(@Param("name") String name);
     
+    UserModel findByEmail(String email);
 } 

@@ -1,4 +1,4 @@
-package alekssandher.free_library.service;
+package alekssandher.free_library.interfaces.user;
 
 import java.util.List;
 
@@ -12,4 +12,5 @@ public interface IUserService {
     UserModel create(UserModel model) throws ConflictException;
 
     void deleteById(long id) throws NotFoundException;
+
 }

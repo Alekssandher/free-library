@@ -1,4 +1,4 @@
-package alekssandher.free_library.service.impl;
+package alekssandher.free_library.modules.users;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 
 import alekssandher.free_library.exception.Exceptions.ConflictException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
+import alekssandher.free_library.interfaces.user.IUserQueryService;
+import alekssandher.free_library.interfaces.user.IUserService;
 import alekssandher.free_library.model.user.UserModel;
 import alekssandher.free_library.repository.IUserRepository;
-import alekssandher.free_library.service.IUserService;
-import alekssandher.free_library.service.query.IUserQueryService;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @Service
@@ -46,6 +46,6 @@ public class UserService implements IUserService {
         repository.deleteById(id);
 
         return;
-    }
+    }  
     
 }

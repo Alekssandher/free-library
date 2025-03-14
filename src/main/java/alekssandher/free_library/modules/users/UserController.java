@@ -1,4 +1,4 @@
-package alekssandher.free_library.controller;
+package alekssandher.free_library.modules.users;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ import alekssandher.free_library.dto.user.UserRequestDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
 import alekssandher.free_library.exception.Exceptions.ConflictException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
+import alekssandher.free_library.interfaces.user.IUserService;
 import alekssandher.free_library.mappers.UserMapper;
-import alekssandher.free_library.service.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
