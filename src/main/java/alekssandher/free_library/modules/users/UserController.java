@@ -20,11 +20,13 @@ import alekssandher.free_library.exception.Exceptions.ConflictException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.user.IUserService;
 import alekssandher.free_library.mappers.UserMapper;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("users")
+@SecurityRequirement(name = "Authorization")
 public class UserController {
     private final IUserService service;
     private final UserMapper mapper;
@@ -44,7 +46,7 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new CreatedResponse(request));
     }
-
+    
     @GetMapping("{name}")
     public ResponseEntity<GetResponse<List<UserResponseDto>>> find(@PathVariable final String name, HttpServletRequest request)
     {
