@@ -1,4 +1,4 @@
-package alekssandher.free_library.config;
+package alekssandher.free_library.config.security;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import alekssandher.free_library.filters.JwtAuthenticationFilter;
-import alekssandher.free_library.modules.jwt.JwtService;
+import alekssandher.free_library.modules.auth.JwtService;
 
 @Configuration
 @EnableWebSecurity

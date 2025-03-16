@@ -1,4 +1,4 @@
-package alekssandher.free_library.modules.jwt;
+package alekssandher.free_library.modules.auth;
 
 import java.time.Instant;
 import java.util.Collections;
