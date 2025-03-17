@@ -40,13 +40,14 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.auth0/java-jwt
 	implementation("com.auth0:java-jwt:4.5.0")
 
+	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44
+	implementation("com.cloudinary:cloudinary-http44:1.39.0")
 
 	compileOnly("org.projectlombok:lombok")
 
 	runtimeOnly("org.postgresql:postgresql")
 
 	annotationProcessor("org.projectlombok:lombok")
-	
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")

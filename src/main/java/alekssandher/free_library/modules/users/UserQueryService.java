@@ -56,4 +56,17 @@ public class UserQueryService implements IUserQueryService {
         return model;
     }
 
+    @Override
+    public UserModel findUserByEmail(String email) throws NotFoundException {
+        var user = repository.findByEmail(email);
+        if (user == null)
+        {
+            throw new NotFoundException("Email not found.");
+        }
+
+        return user;
+    }
+
+    
+
 }

@@ -30,7 +30,7 @@ public class UserModel {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 150)
+    @Column(name = "public_id", unique = true, nullable = false)
     private Long publicId = generateId();
 
     @Column(nullable = false, length = 100)

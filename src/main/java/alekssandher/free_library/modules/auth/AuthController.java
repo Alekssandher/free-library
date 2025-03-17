@@ -39,13 +39,13 @@ public class AuthController {
 
     @Operation(summary = "Register.", description = "Register a new user in the system.")
     @PostMapping("/register")
-    public ResponseEntity<CreatedResponse> register(@Valid @RequestBody final UserRequestDto dto, HttpServletRequest request) throws ConflictException
+    public ResponseEntity<CreatedResponse<Void>> register(@Valid @RequestBody final UserRequestDto dto, HttpServletRequest request) throws ConflictException
     {
         var model = mapper.toModel(dto);
 
         service.create(model);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CreatedResponse(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CreatedResponse<>(request, null));
     }
 
     @PostMapping("/login")

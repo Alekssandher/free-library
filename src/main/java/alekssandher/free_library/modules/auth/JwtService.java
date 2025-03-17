@@ -64,9 +64,9 @@ public class JwtService {
             return JWT.require(algorithm)
                     .withIssuer(emissor) 
                     .build()
-                    .verify(token) 
+                    .verify(token)
                     .getSubject();
-
+            
         } catch (JWTVerificationException exception) {
             throw new JWTVerificationException("Erro ao verificar token.", exception);
         }
@@ -74,7 +74,6 @@ public class JwtService {
     public List<GrantedAuthority> getAuthoritiesFromToken(String token) {
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         
-        // Assume que as roles estão armazenadas como uma lista no claim "roles"
         List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
         
         if (roles == null) return Collections.emptyList();

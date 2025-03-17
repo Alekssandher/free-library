@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String email = jwtService.getSubjectFromToken(token);
 
                 List<GrantedAuthority> authorities = jwtService.getAuthoritiesFromToken(token);
-                System.out.println("Test: %s".formatted(authorities));
+                
                 UsernamePasswordAuthenticationToken authentication = 
                     new UsernamePasswordAuthenticationToken(email, null, authorities);
                 

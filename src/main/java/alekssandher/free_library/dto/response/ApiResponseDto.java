@@ -33,16 +33,16 @@ public class ApiResponseDto {
         }
     }
 
-    public static class CreatedResponse extends ApiResponse<Void> {
+    public static class CreatedResponse<T> extends ApiResponse<T> {
 
-        public CreatedResponse(HttpServletRequest request) {
+        public CreatedResponse(HttpServletRequest request, T data) {
             super(
                 HttpStatus.CREATED.value(),
                 "https://datatracker.ietf.org/doc/html/rfc9110#name-201-created",
                 "Created",
                 "The request was successful, and the resource was created.",
                 request.getRequestURI(),
-                null
+                data
             );
         }
     }

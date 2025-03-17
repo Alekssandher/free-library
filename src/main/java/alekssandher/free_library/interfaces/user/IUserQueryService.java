@@ -12,4 +12,6 @@ public interface IUserQueryService {
     UserModel findById(long id) throws NotFoundException;
 
     UserModel validateCredentials(String email, String password) throws BadRequestException;
+
+    UserModel findUserByEmail(String email) throws NotFoundException;
 }

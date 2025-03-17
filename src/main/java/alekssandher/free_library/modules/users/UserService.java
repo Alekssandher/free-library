@@ -36,7 +36,7 @@ public class UserService implements IUserService {
         queryService.verifyEmail(model.getEmail());
 
         model.setPassword(BCrypt.withDefaults().hashToString(12 , model.getPassword().toCharArray()));
-        System.out.print("saved model with name: " + model.getName());
+        
         return repository.save(model);
     }
 
