@@ -7,6 +7,9 @@ public record BookResponseDto(
     String title,
     String author,
     String description,
+    String language,
+    String publisher,
+    Short publishedAt,
     Long fileId,
     LocalDateTime uploadedAt,
     Long uploadedBy

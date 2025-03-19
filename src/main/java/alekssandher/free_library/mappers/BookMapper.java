@@ -16,17 +16,23 @@ public class BookMapper {
             dto.title(),
             dto.author(),
             dto.description(),
+            dto.language(),
+            dto.publisher(),
+            dto.publishedAt(),
             dto.fileId(),
             user
         );
     }
 
-    public static BookResponseDto toDto(BookModel book) {
+    public BookResponseDto toDto(BookModel book) {
         return new BookResponseDto(
             book.getPublicId(),
             book.getTitle(),
             book.getAuthor(),
             book.getDescription(),
+            book.getLanguage(),
+            book.getPublisher(),
+            book.getPublishedAt(),
             book.getFileId(),
             book.getUploadedAt(),
             book.getUploadedBy().getPublicId()

@@ -30,6 +30,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**", "/swagger-ui/index.html", "/docs.html", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/users/**").hasRole("MANAGER")
                 .anyRequest().authenticated() 
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)

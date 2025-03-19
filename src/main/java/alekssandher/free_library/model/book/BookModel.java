@@ -44,6 +44,15 @@ public class BookModel {
     @Column(nullable = false, length = 400)
     private String description;
 
+    @Column(nullable = false, length = 20)
+    private String language; 
+
+    @Column(nullable = false, length = 255)
+    private String publisher;
+
+    @Column(name = "published_at")
+    private Short publishedAt;
+
     @Column(nullable = false, length = 500)
     private Long fileId;
 
@@ -56,12 +65,15 @@ public class BookModel {
 
     public BookModel() {}
 
-    public BookModel(String title, String author, String description, Long fileId, UserModel uploadedBy)
+    public BookModel(String title, String author, String description, String language, String publisher, Short plubishedAt, Long fileId, UserModel uploadedBy)
     {
         this.publicId = SnowFlakeSing.getInstance().nextId();
         this.title = title;
         this.author = author;
         this.description = description;
+        this.language = language;
+        this.publisher = publisher;
+        this.publishedAt = plubishedAt;
         this.fileId = fileId;
         this.uploadedBy = uploadedBy;
 

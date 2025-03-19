@@ -4,6 +4,8 @@ public record BookRequestDto(
     String title,
     String author,
     String description,
-    Long fileId,
-    Long uploadedBy
+    String language,
+    String publisher,
+    Short publishedAt,
+    Long fileId
 ) {}
