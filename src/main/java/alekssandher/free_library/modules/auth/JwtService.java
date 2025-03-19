@@ -3,7 +3,6 @@ package alekssandher.free_library.modules.auth;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -74,13 +73,11 @@ public class JwtService {
     public List<GrantedAuthority> getAuthoritiesFromToken(String token) {
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         
-        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
-        
-        if (roles == null) return Collections.emptyList();
-
-        return roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        String role = decodedJWT.getClaim("scope").asString();
+    
+        if (role == null) return Collections.emptyList();
+    
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     private Instant creationDate() {
