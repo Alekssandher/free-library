@@ -1,8 +1,14 @@
 package alekssandher.free_library.modules.book;
 
+import java.util.List;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import alekssandher.free_library.dto.book.BookRequestDto;
+import alekssandher.free_library.dto.book.BookResponseDto;
 import alekssandher.free_library.interfaces.book.IBookService;
 import alekssandher.free_library.mappers.BookMapper;
 import alekssandher.free_library.modules.auth.JwtService;
@@ -45,4 +51,12 @@ public class BookService implements IBookService {
         return;
     }
     
+    @Override
+    public List<BookResponseDto> listBooks(String title, String author, String category, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+
+        var result = repository.findByTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndCategoryContainingIgnoreCase(title, author, category, pageable);
+
+        return result.stream().map(mapper::toDto).toList();
+    }
 }

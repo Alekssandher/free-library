@@ -31,7 +31,7 @@ public class UserModel {
     private Long id;
 
     @Column(name = "public_id", unique = true, nullable = false)
-    private Long publicId = generateId();
+    private Long publicId;
 
     @Column(nullable = false, length = 100)
     private String name;
@@ -64,14 +64,8 @@ public class UserModel {
         this.isVerified = false;
         this.createdAt = LocalDateTime.now();
         this.role = "USER";
-        this.publicId = generateId();
+        this.publicId = SnowFlakeSing.getInstance().nextId();
     }
 
-    private Long generateId()
-    {
-        var snowflake = SnowFlakeSing.getInstance();
-
-        return snowflake.nextId();
-    }
 }
 

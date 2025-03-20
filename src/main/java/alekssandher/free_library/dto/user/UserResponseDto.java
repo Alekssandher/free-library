@@ -2,15 +2,16 @@ package alekssandher.free_library.dto.user;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 public record UserResponseDto (
-    @JsonProperty("id")
-    long id,
+    @JsonSerialize(using = ToStringSerializer.class)
+    Long id,
     String name,
     String email,
-    boolean isActive,
-    boolean isVerified,
+    Boolean isActive,
+    Boolean isVerified,
     LocalDateTime createdAt,
     String role
 ) {}

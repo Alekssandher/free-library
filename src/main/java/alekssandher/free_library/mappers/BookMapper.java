@@ -18,6 +18,7 @@ public class BookMapper {
             dto.description(),
             dto.language(),
             dto.publisher(),
+            dto.category(),
             dto.publishedAt(),
             dto.fileId(),
             user
@@ -32,6 +33,7 @@ public class BookMapper {
             book.getDescription(),
             book.getLanguage(),
             book.getPublisher(),
+            book.getCategory(),
             book.getPublishedAt(),
             book.getFileId(),
             book.getUploadedAt(),

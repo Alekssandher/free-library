@@ -4,6 +4,7 @@ public record BookRequestDto(
     String title,
     String author,
     String description,
+    String category,
     String language,
     String publisher,
     Short publishedAt,
