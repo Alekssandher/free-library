@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/swagger-ui/index.html", "/docs.html", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/auth/**", "/swagger-ui/index.html", "/docs.html", "/v3/api-docs/**", "https://free-library.up.railway.app/").permitAll()
                 .requestMatchers("/users/**").hasRole("MANAGER")
                 .anyRequest().authenticated() 
             )
