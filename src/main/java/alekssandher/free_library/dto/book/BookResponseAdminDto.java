@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
-public record BookResponseDto(
+public record BookResponseAdminDto(
     @JsonSerialize(using = ToStringSerializer.class)
     Long id,
     String title,
@@ -17,5 +17,7 @@ public record BookResponseDto(
     Short publishedAt,
     @JsonSerialize(using = ToStringSerializer.class)
     Long fileId,
-    LocalDateTime uploadedAt
+    LocalDateTime uploadedAt,
+    @JsonSerialize(using = ToStringSerializer.class)
+    Long uploadedBy
 ) {}

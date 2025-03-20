@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import alekssandher.free_library.dto.book.BookResponseDto;
+import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
 import alekssandher.free_library.interfaces.admin.IAdminService;
 import alekssandher.free_library.mappers.BookMapper;
@@ -79,12 +79,12 @@ public class AdminService implements IAdminService {
 
 
     @Override
-    public List<BookResponseDto> listBooks(String title, String author, String category, int page, int size) {
+    public List<BookResponseAdminDto> listBooks(String title, String author, String category, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
 
         var result = bookRepository.findByTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndCategoryContainingIgnoreCase(title, author, category, pageable);
 
-        return result.stream().map(bookMapper::toDto).toList();
+        return result.stream().map(bookMapper::toResponseAdminDto).toList();
     }
     
 }

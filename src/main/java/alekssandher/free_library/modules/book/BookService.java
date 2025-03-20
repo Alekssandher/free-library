@@ -57,6 +57,6 @@ public class BookService implements IBookService {
 
         var result = repository.findByTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndCategoryContainingIgnoreCase(title, author, category, pageable);
 
-        return result.stream().map(mapper::toDto).toList();
+        return result.stream().map(mapper::toResponseDto).toList();
     }
 }

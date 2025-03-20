@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import alekssandher.free_library.dto.book.BookResponseDto;
+import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
 import alekssandher.free_library.dto.user.UserResponseDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @GetMapping("books")
-    public ResponseEntity<GetResponse<List<BookResponseDto>>> getBooks(
+    public ResponseEntity<GetResponse<List<BookResponseAdminDto>>> getBooks(
         @RequestParam(required = false, defaultValue = "") String title,
         @RequestParam(required = false, defaultValue = "") String author,
         @RequestParam(required = false, defaultValue = "") String category,
@@ -50,7 +50,7 @@ public class AdminController {
     {
         var result = service.listBooks(title, author, category, page, size);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseDto>>(result, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseAdminDto>>(result, request));
     }
 
     @DeleteMapping("books/{bookPublicId}")

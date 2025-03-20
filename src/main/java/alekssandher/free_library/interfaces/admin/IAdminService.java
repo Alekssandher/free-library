@@ -3,7 +3,7 @@ package alekssandher.free_library.interfaces.admin;
 import java.io.IOException;
 import java.util.List;
 
-import alekssandher.free_library.dto.book.BookResponseDto;
+import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
 
 public interface IAdminService {
@@ -13,7 +13,7 @@ public interface IAdminService {
 
     void chageActiveUserStatus(Long userPublicId, Boolean kind);
 
-    List<BookResponseDto> listBooks(String title, String author, String category, int page, int size);
+    List<BookResponseAdminDto> listBooks(String title, String author, String category, int page, int size);
 
 
 }
