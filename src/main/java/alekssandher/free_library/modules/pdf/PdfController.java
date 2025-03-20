@@ -3,6 +3,7 @@ package alekssandher.free_library.modules.pdf;
 import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +27,9 @@ public class PdfController {
         this.service = service;
     }
 
-    @PostMapping("uploadPdf")
+    @PostMapping(value = "uploadPdf", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CreatedResponse<String>> uploadPdf(
-        @RequestParam("pdf") 
+        @RequestParam() 
         MultipartFile pdf, 
         
         HttpServletRequest request

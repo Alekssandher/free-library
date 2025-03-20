@@ -45,8 +45,8 @@ public class BookController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseDto>>(result, request));
     }
-    
-    @PostMapping("createBook")
+
+    @PostMapping()
     public ResponseEntity<CreatedResponse<Void>> createBook(@RequestBody BookRequestDto dto, @RequestHeader("Authorization") String jwt, HttpServletRequest request)
     {
         service.createBook(dto, jwt);

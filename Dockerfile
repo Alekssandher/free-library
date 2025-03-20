@@ -1,7 +1,6 @@
 # Usa a imagem do BellSoft Liberica JDK 23 (alternativa ao OpenJDK)
 FROM bellsoft/liberica-openjdk-debian:23
 
-# Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
 # Copia os arquivos do projeto para dentro do contêiner
