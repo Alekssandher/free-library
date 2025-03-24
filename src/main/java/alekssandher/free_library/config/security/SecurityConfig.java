@@ -20,9 +20,11 @@ import alekssandher.free_library.modules.auth.JwtService;
 @EnableWebSecurity
 public class SecurityConfig {
     private final JwtService jwtService;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(JwtService jwtService) {
+    public SecurityConfig(JwtService jwtService, CustomAccessDeniedHandler accessDeniedHandler) {
         this.jwtService = jwtService;
+        this.accessDeniedHandler = accessDeniedHandler;
     }
 
     @Bean
@@ -33,7 +35,8 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole("MANAGER")
                 .anyRequest().authenticated() 
             )
-            .addFilterBefore(new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler))
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); 
 
         return http.build();
@@ -50,5 +53,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtService);
     }
 }

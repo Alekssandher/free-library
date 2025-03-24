@@ -49,7 +49,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<ErrorDetails> handleCustomException(ForbiddenException ex, HttpServletRequest request)
     {
-        ErrorDetails error = new Forbidden(request, ex.getMessage());
+        ErrorDetails error = new Forbidden(request);
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 

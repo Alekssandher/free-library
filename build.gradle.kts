@@ -13,7 +13,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -38,7 +38,7 @@ dependencies {
 	implementation("io.github.cdimascio:dotenv-java:3.2.0")
 	implementation("at.favre.lib:bcrypt:0.10.2")
 	implementation("org.hibernate.validator:hibernate-validator:9.0.0.CR1")
-	
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.3")
 	// https://mvnrepository.com/artifact/com.auth0/java-jwt
 	implementation("com.auth0:java-jwt:4.5.0")
 

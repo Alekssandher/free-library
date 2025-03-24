@@ -53,11 +53,11 @@ public class ErrorResponses {
     }
 
     public static class Forbidden extends ErrorDetails {
-        public Forbidden(HttpServletRequest request, String detail) {
+        public Forbidden(HttpServletRequest request) {
             super(
                 HttpStatus.FORBIDDEN.value(),
                 "Forbidden",
-                detail != null ? detail : "Operation Not Authorized",
+                "You do not have permission to access this resource.",
                 "https://datatracker.ietf.org/doc/html/rfc9110#status.403",
                 request.getRequestURI()
             );

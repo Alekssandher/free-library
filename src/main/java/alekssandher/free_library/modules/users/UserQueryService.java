@@ -1,9 +1,9 @@
 package alekssandher.free_library.modules.users;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import alekssandher.free_library.entities.user.UserEntity;
+import alekssandher.free_library.exception.Exceptions.BadRequestException;
 import alekssandher.free_library.exception.Exceptions.ConflictException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.user.IUserQueryService;

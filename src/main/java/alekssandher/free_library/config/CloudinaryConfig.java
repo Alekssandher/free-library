@@ -19,9 +19,9 @@ public class CloudinaryConfig {
     public CloudinaryConfig(Dotenv dotenv)
     {
         this.dotenv = dotenv;
-        this.cloudName = this.dotenv.get("CLOUDINARY_NAME");
-        this.cloudKey = this.dotenv.get("CLOUDINARY_KEY");
-        this.cloudSecret = this.dotenv.get("CLOUDINARY_SECRET");
+        this.cloudName = getEnv("CLOUDINARY_NAME");
+        this.cloudKey = getEnv("CLOUDINARY_KEY");
+        this.cloudSecret = getEnv("CLOUDINARY_SECRET");
     }
 
     @Bean
@@ -31,5 +31,9 @@ public class CloudinaryConfig {
                 "api_key", cloudKey,
                 "api_secret", cloudSecret
         ));
+    }
+
+    private String getEnv(String key) {
+        return dotenv.get(key) != null ? dotenv.get(key) : System.getenv(key);
     }
 }

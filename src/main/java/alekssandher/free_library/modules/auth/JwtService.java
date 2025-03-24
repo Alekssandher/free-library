@@ -33,14 +33,18 @@ public class JwtService {
     public JwtService(Dotenv dotenv)
     {
         this.dotenv = dotenv;
-        this.secret = this.dotenv.get("SECRET");
-        this.emissor = this.dotenv.get("EMISSOR");
+        this.secret = getEnv("SECRET");
+        this.emissor = getEnv("EMISSOR");
         
         if (this.secret == null || this.emissor == null) {
             throw new IllegalStateException("SECRET e EMISSOR must be defined in .env file");
         }
 
         this.jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
+    }
+    
+    private String getEnv(String key) {
+        return dotenv.get(key) != null ? dotenv.get(key) : System.getenv(key);
     }
 
     public String generateToken(UserEntity model)
@@ -80,7 +84,7 @@ public class JwtService {
             throw new BadRequestException("Malformed token.");
 
         } catch (JWTVerificationException ex) { 
-            throw new JWTVerificationException("Error verifying token.", ex);
+            throw ex;
         }
     }
 
