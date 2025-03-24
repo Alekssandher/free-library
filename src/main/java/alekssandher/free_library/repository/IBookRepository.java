@@ -7,14 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import alekssandher.free_library.model.book.BookModel;
+import alekssandher.free_library.entities.book.BookEntity;
 
 @Repository
-public interface IBookRepository extends JpaRepository<BookModel, Long>{
-    Optional<BookModel> findByPublicId(Long publicId);
+public interface IBookRepository extends JpaRepository<BookEntity, Long>{
+    Optional<BookEntity> findByPublicId(Long publicId);
     void deleteBookByPublicId(Long bookPublicId);
 
-    Page<BookModel> findByTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndCategoryContainingIgnoreCase(
+    Page<BookEntity> findByTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndCategoryContainingIgnoreCase(
         String title, 
         String author, 
         String category,

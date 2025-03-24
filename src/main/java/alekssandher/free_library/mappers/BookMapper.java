@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import alekssandher.free_library.dto.book.BookRequestDto;
 import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.book.BookResponseDto;
-import alekssandher.free_library.model.book.BookModel;
-import alekssandher.free_library.model.user.UserModel;
+import alekssandher.free_library.entities.book.BookEntity;
+import alekssandher.free_library.entities.user.UserEntity;
 
 @Component
 public class BookMapper {
     
-    public BookModel toBookModel(BookRequestDto dto, UserModel user)
+    public BookEntity toBookEntity(BookRequestDto dto, UserEntity user)
     {
-        return new BookModel(
+        return new BookEntity(
             dto.title(),
             dto.author(),
             dto.description(),
@@ -26,7 +26,7 @@ public class BookMapper {
         );
     }
 
-    public BookResponseDto toResponseDto(BookModel book) {
+    public BookResponseDto toResponseDto(BookEntity book) {
         return new BookResponseDto(
             book.getPublicId(),
             book.getTitle(),
@@ -41,7 +41,7 @@ public class BookMapper {
         );
     }
 
-    public BookResponseAdminDto toResponseAdminDto(BookModel book) {
+    public BookResponseAdminDto toResponseAdminDto(BookEntity book) {
         return new BookResponseAdminDto(
             book.getPublicId(),
             book.getTitle(),

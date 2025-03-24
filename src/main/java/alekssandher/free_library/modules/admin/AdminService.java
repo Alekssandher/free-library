@@ -13,13 +13,13 @@ import com.cloudinary.utils.ObjectUtils;
 
 import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
+import alekssandher.free_library.entities.book.BookEntity;
+import alekssandher.free_library.entities.user.UserEntity;
 import alekssandher.free_library.exception.Exceptions.BadRequestException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.admin.IAdminService;
 import alekssandher.free_library.mappers.BookMapper;
 import alekssandher.free_library.mappers.UserMapper;
-import alekssandher.free_library.model.book.BookModel;
-import alekssandher.free_library.model.user.UserModel;
 import alekssandher.free_library.repository.IBookRepository;
 import alekssandher.free_library.repository.IUserRepository;
 
@@ -50,7 +50,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public void deleteBook(Long bookPublicId) throws IOException {
-        BookModel book = bookRepository.findByPublicId(bookPublicId).orElseThrow(() -> new NotFoundException("Book not found"));
+        BookEntity book = bookRepository.findByPublicId(bookPublicId).orElseThrow(() -> new NotFoundException("Book not found"));
         cloudinary.uploader().destroy(book.getFileId().toString(), ObjectUtils.asMap("resource_type", "raw"));
         bookRepository.delete(book);
         return;
@@ -65,7 +65,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public void chageActiveUserStatus(Long userPublicId, Boolean kind) {
-        UserModel user = userRepository.findByPublicId(userPublicId).orElseThrow(() -> new NotFoundException("User not found"));
+        UserEntity user = userRepository.findByPublicId(userPublicId).orElseThrow(() -> new NotFoundException("User not found"));
 
         if(user.getIsActive() == kind)
         {

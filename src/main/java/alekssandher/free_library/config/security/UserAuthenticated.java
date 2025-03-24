@@ -7,13 +7,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import alekssandher.free_library.model.user.UserModel;
+import alekssandher.free_library.entities.user.UserEntity;
 
 public class UserAuthenticated implements UserDetails {
 
-    private final UserModel user;
+    private final UserEntity user;
 
-    public UserAuthenticated(UserModel user)
+    public UserAuthenticated(UserEntity user)
     {
         this.user = user;
     }

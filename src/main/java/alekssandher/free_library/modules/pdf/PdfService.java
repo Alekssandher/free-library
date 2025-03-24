@@ -9,9 +9,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
 import alekssandher.free_library.config.SnowFlakeSing;
+import alekssandher.free_library.entities.pdf.PdfEntity;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.pdf.IPdfService;
-import alekssandher.free_library.model.pdf.PdfEntity;
 import alekssandher.free_library.repository.IPdfRepository;
 import jakarta.transaction.Transactional;
 

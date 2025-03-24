@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import alekssandher.free_library.model.pdf.PdfEntity;
+import alekssandher.free_library.entities.pdf.PdfEntity;
 
 public interface IPdfRepository extends JpaRepository<PdfEntity, Long> {
     @Modifying

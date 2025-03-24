@@ -41,7 +41,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<CreatedResponse<Void>> register(@Valid @RequestBody final UserRequestDto dto, HttpServletRequest request) throws ConflictException
     {
-        var model = mapper.toModel(dto);
+        var model = mapper.toUserEntity(dto);
 
         service.create(model);
 

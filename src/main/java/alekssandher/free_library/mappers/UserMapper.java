@@ -7,21 +7,21 @@ import org.springframework.stereotype.Component;
 
 import alekssandher.free_library.dto.user.UserRequestDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
-import alekssandher.free_library.model.user.UserModel;
+import alekssandher.free_library.entities.user.UserEntity;
 
 @Component
 public class UserMapper {
 
-    public UserModel toModel(UserRequestDto dto)
+    public UserEntity toUserEntity(UserRequestDto dto)
     {
-        return new UserModel(
+        return new UserEntity(
             dto.name().trim(), 
             dto.email().trim().toLowerCase(), 
             dto.password()
         );
     }   
 
-    public UserResponseDto toResponseDto(UserModel model)
+    public UserResponseDto toUserResponseDto(UserEntity model)
     {   
         return new UserResponseDto(
             model.getPublicId(),
@@ -34,9 +34,9 @@ public class UserMapper {
         );
     }
 
-    public List<UserResponseDto> toListResponseDto(List<UserModel> models)
+    public List<UserResponseDto> toListResponseDto(List<UserEntity> models)
     {
-        var modelsConverted = models.stream().map(this::toResponseDto).collect(Collectors.toList());
+        var modelsConverted = models.stream().map(this::toUserResponseDto).collect(Collectors.toList());
 
         return modelsConverted;
     }

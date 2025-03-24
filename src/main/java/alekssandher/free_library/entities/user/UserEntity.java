@@ -1,4 +1,4 @@
-package alekssandher.free_library.model.user;
+package alekssandher.free_library.entities.user;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -25,7 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(exclude = "password")
-public class UserModel {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -54,9 +54,9 @@ public class UserModel {
     @Column(nullable = false, length = 10) 
     private String role = "USER";
 
-    public UserModel() {}
+    public UserEntity() {}
 
-    public UserModel(String name, String email, String hashedPassword) {
+    public UserEntity(String name, String email, String hashedPassword) {
         this.name = name;
         this.email = email;
         this.password = hashedPassword;

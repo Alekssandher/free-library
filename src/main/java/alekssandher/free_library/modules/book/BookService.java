@@ -46,7 +46,7 @@ public class BookService implements IBookService {
         
         pdfService.deleteByPdfId(dto.fileId());
 
-        repository.save(mapper.toBookModel(dto, user));
+        repository.save(mapper.toBookEntity(dto, user));
 
         return;
     }

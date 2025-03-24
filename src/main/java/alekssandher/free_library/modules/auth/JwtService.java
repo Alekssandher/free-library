@@ -18,8 +18,8 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import alekssandher.free_library.entities.user.UserEntity;
 import alekssandher.free_library.exception.Exceptions.BadRequestException;
-import alekssandher.free_library.model.user.UserModel;
 import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
@@ -43,7 +43,7 @@ public class JwtService {
         this.jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
     }
 
-    public String generateToken(UserModel model)
+    public String generateToken(UserEntity model)
     {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

@@ -1,4 +1,4 @@
-package alekssandher.free_library.model.pdf;
+package alekssandher.free_library.entities.pdf;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 

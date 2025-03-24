@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import alekssandher.free_library.model.pdf.PdfEntity;
+import alekssandher.free_library.entities.pdf.PdfEntity;
 import alekssandher.free_library.repository.IPdfRepository;
 import jakarta.annotation.PostConstruct;
 

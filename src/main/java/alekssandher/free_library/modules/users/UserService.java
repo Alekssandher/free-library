@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import alekssandher.free_library.entities.user.UserEntity;
 import alekssandher.free_library.exception.Exceptions.ConflictException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.user.IUserQueryService;
 import alekssandher.free_library.interfaces.user.IUserService;
-import alekssandher.free_library.model.user.UserModel;
 import alekssandher.free_library.repository.IUserRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -25,14 +25,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserModel> findUsersByName(String name) {
+    public List<UserEntity> findUsersByName(String name) {
         
         
         return repository.findTop10ByNameContainingIgnoreCase(name);
     }
 
     @Override
-    public UserModel create(UserModel model) throws ConflictException {
+    public UserEntity create(UserEntity model) throws ConflictException {
         queryService.verifyEmail(model.getEmail());
 
         model.setPassword(BCrypt.withDefaults().hashToString(12 , model.getPassword().toCharArray()));

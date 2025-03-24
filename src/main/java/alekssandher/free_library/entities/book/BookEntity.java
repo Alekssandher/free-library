@@ -1,11 +1,11 @@
-package alekssandher.free_library.model.book;
+package alekssandher.free_library.entities.book;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.time.LocalDateTime;
 
 import alekssandher.free_library.config.SnowFlakeSing;
-import alekssandher.free_library.model.user.UserModel;
+import alekssandher.free_library.entities.user.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +27,7 @@ import lombok.Setter;
 )
 @Getter
 @Setter
-public class BookModel {
+public class BookEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -64,11 +64,11 @@ public class BookModel {
 
     @ManyToOne
     @JoinColumn(name = "uploaded_by", nullable = false, referencedColumnName = "public_id", foreignKey = @ForeignKey(name = "FK_BOOK_UPLOADER"))
-    private UserModel uploadedBy;
+    private UserEntity uploadedBy;
 
-    public BookModel() {}
+    public BookEntity() {}
 
-    public BookModel(String title, String author, String description, String language, String publisher, String category, Short plubishedAt, Long fileId, UserModel uploadedBy)
+    public BookEntity(String title, String author, String description, String language, String publisher, String category, Short plubishedAt, Long fileId, UserEntity uploadedBy)
     {
         this.publicId = SnowFlakeSing.getInstance().nextId();
         this.title = title;

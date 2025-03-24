@@ -7,15 +7,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import alekssandher.free_library.model.user.UserModel;
+import alekssandher.free_library.entities.user.UserEntity;
 
 @Repository
-public interface IUserRepository extends JpaRepository<UserModel, Long>{
+public interface IUserRepository extends JpaRepository<UserEntity, Long>{
     boolean existsByEmail(String email);
     
-    List<UserModel> findTop10ByNameContainingIgnoreCase(@Param("name") String name);
+    List<UserEntity> findTop10ByNameContainingIgnoreCase(@Param("name") String name);
 
-    Optional<UserModel> findByPublicId(Long publicId);
+    Optional<UserEntity> findByPublicId(Long publicId);
 
-    UserModel findByEmail(String email);
+    UserEntity findByEmail(String email);
 } 
