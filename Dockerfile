@@ -1,15 +1,21 @@
-FROM eclipse-temurin:21-jdk-noble
-
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
-COPY . .
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
 
-RUN chmod +x gradlew
+RUN chmod +x ./gradlew
 
 RUN ./gradlew clean build -x test
 
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
 EXPOSE 8080
 
-ENV JAVA_OPTS="-Xmx256m -Xms128m"
-
-CMD ["sh", "-c", "export $(grep -v '^#' .env | xargs) && ./gradlew bootRun"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
