@@ -1,9 +1,7 @@
 FROM openjdk:21-jdk AS build
 WORKDIR /app
 
-COPY build.gradle.kts settings.gradle.kts gradlew ./
-COPY gradle gradle
-COPY src src
+COPY . .
 
 RUN chmod +x gradlew && ./gradlew --version
 
