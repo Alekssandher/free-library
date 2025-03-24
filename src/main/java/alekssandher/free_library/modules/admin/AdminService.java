@@ -13,6 +13,8 @@ import com.cloudinary.utils.ObjectUtils;
 
 import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
+import alekssandher.free_library.exception.Exceptions.BadRequestException;
+import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.admin.IAdminService;
 import alekssandher.free_library.mappers.BookMapper;
 import alekssandher.free_library.mappers.UserMapper;
@@ -48,7 +50,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public void deleteBook(Long bookPublicId) throws IOException {
-        BookModel book = bookRepository.findByPublicId(bookPublicId).orElseThrow(() -> new RuntimeException("Book not found"));
+        BookModel book = bookRepository.findByPublicId(bookPublicId).orElseThrow(() -> new NotFoundException("Book not found"));
         cloudinary.uploader().destroy(book.getFileId().toString(), ObjectUtils.asMap("resource_type", "raw"));
         bookRepository.delete(book);
         return;
@@ -63,11 +65,11 @@ public class AdminService implements IAdminService {
 
     @Override
     public void chageActiveUserStatus(Long userPublicId, Boolean kind) {
-        UserModel user = userRepository.findByPublicId(userPublicId).orElseThrow(() -> new RuntimeException("User not found"));
+        UserModel user = userRepository.findByPublicId(userPublicId).orElseThrow(() -> new NotFoundException("User not found"));
 
         if(user.getIsActive() == kind)
         {
-            throw new RuntimeException("You can't change the active status to the same status.");
+            throw new BadRequestException("You can't change the active status to the same status.");
         }
 
         user.setIsActive(kind);

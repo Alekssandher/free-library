@@ -19,6 +19,7 @@ import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
 import alekssandher.free_library.interfaces.book.IBookService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("books")
@@ -47,7 +48,7 @@ public class BookController {
     }
 
     @PostMapping()
-    public ResponseEntity<CreatedResponse<Void>> createBook(@RequestBody BookRequestDto dto, @RequestHeader("Authorization") String jwt, HttpServletRequest request)
+    public ResponseEntity<CreatedResponse<Void>> createBook(@Valid @RequestBody BookRequestDto dto, @RequestHeader("Authorization") String jwt, HttpServletRequest request)
     {
         service.createBook(dto, jwt);
 

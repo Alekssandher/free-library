@@ -15,6 +15,16 @@ public class ErrorResponses {
                 request.getRequestURI()
             );
         }
+
+        public InternalErrorCustom(HttpServletRequest request, String detail) {
+            super(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Error",
+                detail, 
+                "https://datatracker.ietf.org/doc/html/rfc9110#status.500",
+                request.getRequestURI()
+            );
+        }
     }
     
     public static class BadRequest extends ErrorDetails {

@@ -9,10 +9,10 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
 import alekssandher.free_library.config.SnowFlakeSing;
+import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.pdf.IPdfService;
 import alekssandher.free_library.model.pdf.PdfEntity;
 import alekssandher.free_library.repository.IPdfRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -51,7 +51,7 @@ public class PdfService implements IPdfService{
 
         if(deleteCount == 0)
         {
-            throw new EntityNotFoundException("PDF with id: " + id + " not found");
+            throw new NotFoundException("PDF with id: " + id + " not found");
         }
     }
     

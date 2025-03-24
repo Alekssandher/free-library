@@ -12,9 +12,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import alekssandher.free_library.exception.Exceptions.BadRequestException;
 import alekssandher.free_library.model.user.UserModel;
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -33,7 +37,7 @@ public class JwtService {
         this.emissor = this.dotenv.get("EMISSOR");
         
         if (this.secret == null || this.emissor == null) {
-            throw new IllegalStateException("SECRET e EMISSOR devem estar definidos no arquivo .env");
+            throw new IllegalStateException("SECRET e EMISSOR must be defined in .env file");
         }
 
         this.jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
@@ -52,7 +56,7 @@ public class JwtService {
                 .sign(algorithm);
 
         }catch (JWTCreationException exception) {
-            throw new JWTCreationException("Erro ao gerar token.", exception);
+            throw new JWTCreationException("Error generating token.", exception);
         }
     }
     
@@ -66,10 +70,20 @@ public class JwtService {
                     .verify(token)
                     .getSubject();
             
-        } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Erro ao verificar token.", exception);
+        } catch (TokenExpiredException ex) { 
+            throw new BadRequestException("Token expired.");
+
+        } catch (SignatureVerificationException ex) { 
+            throw new BadRequestException("Invalid token signature.");
+
+        } catch (JWTDecodeException ex) { 
+            throw new BadRequestException("Malformed token.");
+
+        } catch (JWTVerificationException ex) { 
+            throw new JWTVerificationException("Error verifying token.", ex);
         }
     }
+
     public List<GrantedAuthority> getAuthoritiesFromToken(String token) {
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         
