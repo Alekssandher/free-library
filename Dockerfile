@@ -5,7 +5,7 @@ COPY build.gradle.kts settings.gradle.kts gradlew ./
 COPY gradle gradle
 COPY src src
 
-RUN chmod +x ./gradlew
+RUN chmod +x gradlew && ./gradlew --version
 
 RUN ./gradlew clean build -x test
 
