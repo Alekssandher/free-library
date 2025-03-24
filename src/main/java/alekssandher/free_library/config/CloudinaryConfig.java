@@ -1,28 +1,23 @@
 package alekssandher.free_library.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
 @Configuration
 public class CloudinaryConfig {
     
-    private final Dotenv dotenv;
+    @Value("${CLOUDINARY_SECRET:NOT_SET}")
     private String cloudSecret;
-    private String cloudName;
-    private String cloudKey;
 
-    public CloudinaryConfig(Dotenv dotenv)
-    {
-        this.dotenv = dotenv;
-        this.cloudName = getEnv("CLOUDINARY_NAME");
-        this.cloudKey = getEnv("CLOUDINARY_KEY");
-        this.cloudSecret = getEnv("CLOUDINARY_SECRET");
-    }
+    @Value("${CLOUDINARY_NAME:NOT_SET}")
+    private String cloudName;
+
+    @Value("${CLOUDINARY_KEY:NOT_SET}")
+    private String cloudKey;
 
     @Bean
     public Cloudinary cloudinary() {
@@ -33,7 +28,4 @@ public class CloudinaryConfig {
         ));
     }
 
-    private String getEnv(String key) {
-        return dotenv.get(key) != null ? dotenv.get(key) : System.getenv(key);
-    }
 }

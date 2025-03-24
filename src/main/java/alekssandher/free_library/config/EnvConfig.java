@@ -1,15 +1,15 @@
-package alekssandher.free_library.config;
+// package alekssandher.free_library.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
 
-import io.github.cdimascio.dotenv.Dotenv;
+// import io.github.cdimascio.dotenv.Dotenv;
 
-@Configuration
-public class EnvConfig {
-    @Bean
-    public Dotenv dotenv()
-    {
-        return Dotenv.load();
-    }
-}
+// @Configuration
+// public class EnvConfig {
+//     @Bean
+//     public Dotenv dotenv()
+//     {
+//         return Dotenv.load();
+//     }
+// }

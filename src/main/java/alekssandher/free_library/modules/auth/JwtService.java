@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -20,31 +21,20 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 import alekssandher.free_library.entities.user.UserEntity;
 import alekssandher.free_library.exception.Exceptions.BadRequestException;
-import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class JwtService {
 
-    private final Dotenv dotenv;
     private final String secret;
     private final String emissor;
     private final JWTVerifier jwtVerifier;
-    
-    public JwtService(Dotenv dotenv)
-    {
-        this.dotenv = dotenv;
-        this.secret = getEnv("SECRET");
-        this.emissor = getEnv("EMISSOR");
-        
-        if (this.secret == null || this.emissor == null) {
-            throw new IllegalStateException("SECRET e EMISSOR must be defined in .env file");
-        }
 
-        this.jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
-    }
     
-    private String getEnv(String key) {
-        return dotenv.get(key) != null ? dotenv.get(key) : System.getenv(key);
+    public JwtService( @Value("${SECRET:NOT_SET}") String secret, @Value("${EMISSOR:NOT_SET}") String emissor ) 
+    {
+        this.secret = secret;
+        this.emissor = emissor;
+        this.jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
     }
 
     public String generateToken(UserEntity model)
