@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public record BookRequestDto(
@@ -32,5 +33,6 @@ public record BookRequestDto(
     Short publishedAt,
 
     @NotNull(message = "File ID is required")
+    @Positive(message = "File ID must be a positive number")
     Long fileId
 ) {}

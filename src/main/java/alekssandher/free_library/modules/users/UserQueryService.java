@@ -24,7 +24,7 @@ public class UserQueryService implements IUserQueryService {
     public void verifyEmail(String email) throws ConflictException {
         if(repository.existsByEmail(email))
         {
-            var message = "O email %s já está em uso.".formatted(email);
+            var message = "The email %s is already in use.".formatted(email);
 
             throw new ConflictException(message);
         }
@@ -35,22 +35,23 @@ public class UserQueryService implements IUserQueryService {
     @Override
     public UserModel findById(long id) throws NotFoundException {
         
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Cliente não encontrado com o id: %s".formatted(id)));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("User not found with id: %s".formatted(id)));
     }
 
     @Override
     public UserModel validateCredentials(String email, String password) throws BadRequestException {
         var model = repository.findByEmail(email);
+        var message = "The email or password provided is wrong.";
         if(model == null)
         {
-            throw new BadRequestException("The email or password provided is wrong.");
+            throw new BadRequestException(message);
         }
 
         var result = BCrypt.verifyer().verify(password.toCharArray(), model.getPassword()).verified;
         
         if(!result)
         {
-            throw new BadRequestException("The email or password provided is wrong.");
+            throw new BadRequestException(message);
         }
         
         return model;

@@ -39,6 +39,19 @@ public class ErrorResponses {
         }
     }
     
+    public static class Conflict extends ErrorDetails {
+        public Conflict(HttpServletRequest request, String detail)
+        {
+            super(
+                HttpStatus.FORBIDDEN.value(),
+                "Conflict",
+                detail != null ? detail : "Operation Not Authorized by a conflict",
+                "https://datatracker.ietf.org/doc/html/rfc9110#status.409",
+                request.getRequestURI()
+            );
+        }
+    }
+
     public static class Forbidden extends ErrorDetails {
         public Forbidden(HttpServletRequest request, String detail) {
             super(
