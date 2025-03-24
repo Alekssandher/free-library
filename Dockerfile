@@ -1,7 +1,10 @@
-FROM openjdk:21-jdk AS build
+FROM eclipse-temurin:21-jdk-noble AS build
+
 WORKDIR /app
 
-COPY . .
+COPY build.gradle.kts settings.gradle.kts gradlew ./
+COPY gradle gradle
+COPY src src
 
 RUN chmod +x gradlew && ./gradlew --version
 
@@ -10,7 +13,8 @@ RUN ./gradlew clean build -x test
 FROM openjdk:21-jdk
 WORKDIR /app
 
-COPY --from=build /app/build/libs/*.jar app.jar
-
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+COPY --from=build /app/build/libs/*.jar /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
