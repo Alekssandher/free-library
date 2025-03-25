@@ -11,5 +11,4 @@ public interface IBookService {
     
     List<BookResponseDto> listBooks(String title, String author, String category, int page, int size);
 
-    void addFavoriteBook(Long bookPublicId, String jwt);
 }

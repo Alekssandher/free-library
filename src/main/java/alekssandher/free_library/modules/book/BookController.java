@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +46,7 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseDto>>(result, request));
     }
 
-    @PostMapping("create")
+    @PostMapping()
     public ResponseEntity<CreatedResponse<Void>> createBook(@Valid @RequestBody BookRequestDto dto, HttpServletRequest request)
     {
         String jwt = request.getHeader("Authorization");
@@ -58,12 +56,4 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body( new CreatedResponse<Void>(request, null));
     }
     
-    @PostMapping("addFavorite/{bookPublicId}")
-    public ResponseEntity<CreatedResponse<Void>> addFavorite(@PathVariable Long bookPublicId, HttpServletRequest request)
-    {
-        String jwt = request.getHeader("Authorization");
-        service.addFavoriteBook(bookPublicId, jwt);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body( new CreatedResponse<Void>(request, null));
-    }
 }
