@@ -36,9 +36,9 @@ public class AuthController {
         this.jwtService = jwtService;
 
     }
-
-    @Operation(summary = "Register.", description = "Register a new user in the system.")
+    
     @PostMapping("/register")
+    @Operation(summary = "Register.", description = "Register a new user in the system.")
     public ResponseEntity<CreatedResponse<Void>> register(@Valid @RequestBody final UserRequestDto dto, HttpServletRequest request) throws ConflictException
     {
         var model = mapper.toUserEntity(dto);

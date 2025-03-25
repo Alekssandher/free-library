@@ -17,6 +17,7 @@ import alekssandher.free_library.entities.book.BookEntity;
 import alekssandher.free_library.entities.user.UserEntity;
 import alekssandher.free_library.exception.Exceptions.BadRequestException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
+import alekssandher.free_library.exception.Exceptions.InternalErrorException;
 import alekssandher.free_library.interfaces.admin.IAdminService;
 import alekssandher.free_library.mappers.BookMapper;
 import alekssandher.free_library.mappers.UserMapper;
@@ -49,9 +50,14 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void deleteBook(Long bookPublicId) throws IOException {
+    public void deleteBook(Long bookPublicId)  {
         BookEntity book = bookRepository.findByPublicId(bookPublicId).orElseThrow(() -> new NotFoundException("Book not found"));
-        cloudinary.uploader().destroy(book.getFileId().toString(), ObjectUtils.asMap("resource_type", "raw"));
+        try {
+            cloudinary.uploader().destroy(book.getFileId().toString(), ObjectUtils.asMap("resource_type", "raw"));
+        } catch (IOException e) {
+            
+           throw new InternalErrorException("Something went wrong at our side.");
+        }
         bookRepository.delete(book);
         return;
     }

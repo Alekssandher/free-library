@@ -1,14 +1,12 @@
 package alekssandher.free_library.modules.rating;
 
-import java.util.Arrays;
-
 import org.springframework.stereotype.Service;
 
 import alekssandher.free_library.dto.rating.BookRatingResponseDto;
 import alekssandher.free_library.entities.rating.BookRatingEntity;
 import alekssandher.free_library.exception.Exceptions.ConflictException;
-import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.exception.Exceptions.InternalErrorException;
+import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.rating.IBookRatingService;
 import alekssandher.free_library.modules.auth.JwtService;
 import alekssandher.free_library.repository.IBookRatingRepository;
