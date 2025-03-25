@@ -11,6 +11,7 @@ RUN chmod +x gradlew && ./gradlew --version
 RUN ./gradlew clean build -x test
 
 FROM openjdk:21-jdk
+
 WORKDIR /app
 
 EXPOSE 8080

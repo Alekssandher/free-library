@@ -48,11 +48,13 @@ public class BookController {
     }
 
     @PostMapping()
-    public ResponseEntity<CreatedResponse<Void>> createBook(@Valid @RequestBody BookRequestDto dto, @RequestHeader("Authorization") String jwt, HttpServletRequest request)
+    public ResponseEntity<CreatedResponse<Void>> createBook(@Valid @RequestBody BookRequestDto dto, HttpServletRequest request)
     {
+        String jwt = request.getHeader("Authorization");
+       
         service.createBook(dto, jwt);
 
         return ResponseEntity.status(HttpStatus.CREATED).body( new CreatedResponse<Void>(request, null));
     }
-
+    
 }

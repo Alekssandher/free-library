@@ -30,7 +30,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException  
     {
         String token = extractToken(request);
-        if (token != null) {
+
+        if (token != null) 
+        {
+            
             try {
                 String email = jwtService.getSubjectFromToken(token);
 
