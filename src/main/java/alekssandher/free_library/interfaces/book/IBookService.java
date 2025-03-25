@@ -10,4 +10,6 @@ public interface IBookService {
     void createBook(BookRequestDto dto, String jwt);
     
     List<BookResponseDto> listBooks(String title, String author, String category, int page, int size);
+
+    void addFavoriteBook(Long bookPublicId, String jwt);
 }
