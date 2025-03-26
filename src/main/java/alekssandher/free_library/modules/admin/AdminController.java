@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import alekssandher.free_library.dto.book.BookResponseAdminDto;
-import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
+import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
 import alekssandher.free_library.dto.response.ErrorResponses.NotFound;
@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("admin")
@@ -47,31 +48,31 @@ public class AdminController {
 
     @Operation(summary = "Find users by name", description = "Retrieves a list of users that match the given name.")
     @ApiResponse(responseCode = "200", description = "Users retrieved successfully", 
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = GetResponse.class)))
+                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
     @GetMapping("users/{name}")
-    public ResponseEntity<GetResponse<List<UserResponseDto>>> findUsersByName(@PathVariable String name, HttpServletRequest request)
+    public ResponseEntity<OkResponse<List<UserResponseDto>>> findUsersByName(@Valid @PathVariable String name, HttpServletRequest request)
     {
         var result = service.findUsersByName(name);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<UserResponseDto>>(result, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<List<UserResponseDto>>(result, request));
     }
 
     @Operation(summary = "Get books", description = "Retrieves a list of books based on optional filters: title, author, and category.")
     @ApiResponse(responseCode = "200", description = "Books retrieved successfully", 
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = GetResponse.class)))
+                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
     @GetMapping("books")
-    public ResponseEntity<GetResponse<List<BookResponseAdminDto>>> getBooks(
-        @RequestParam(required = false, defaultValue = "") String title,
-        @RequestParam(required = false, defaultValue = "") String author,
-        @RequestParam(required = false, defaultValue = "") String category,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size,
+    public ResponseEntity<OkResponse<List<BookResponseAdminDto>>> getBooks(
+        @Valid @RequestParam(required = false, defaultValue = "") String title,
+        @Valid @RequestParam(required = false, defaultValue = "") String author,
+        @Valid @RequestParam(required = false, defaultValue = "") String category,
+        @Valid @RequestParam(defaultValue = "0") int page,
+        @Valid @RequestParam(defaultValue = "10") int size,
         HttpServletRequest request
     )
     {
         var result = service.listBooks(title, author, category, page, size);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseAdminDto>>(result, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<List<BookResponseAdminDto>>(result, request));
     }
 
     @Operation(summary = "Delete a book", description = "Deletes a book by its public ID.")
@@ -81,20 +82,21 @@ public class AdminController {
     @ApiResponse(responseCode = "404", description = "Book not found", 
                  content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
     @DeleteMapping("books/{bookPublicId}")
-    public ResponseEntity<String> deleteBookByPublicId(@PathVariable Long bookPublicId)
+    public ResponseEntity<String> deleteBookByPublicId(@Valid @PathVariable Long bookPublicId)
     {
         service.deleteBook(bookPublicId);
         return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Change user status", description = "Activates or deactivates a user by their public ID.")
-    @ApiResponse(responseCode = "200", description = "User status changed successfully")
+    @ApiResponse(responseCode = "200", description = "User status changed successfully", 
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
     @ApiResponse(responseCode = "404", description = "User not found", 
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
     @PatchMapping("users/{userPublicId}/{kind}")
-    public ResponseEntity<String> inactiveUser(@PathVariable Long userPublicId, @PathVariable Boolean kind)
+    public ResponseEntity<OkResponse<Void>> inactiveUser(@Valid @PathVariable Long userPublicId, @Valid @PathVariable Boolean kind, HttpServletRequest request)
     {
         service.chageActiveUserStatus(userPublicId, kind);
-        return ResponseEntity.ok("Inactived");
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<Void>(null, request));
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import alekssandher.free_library.dto.response.ApiResponseDto.CreatedResponse;
-import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
+import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.BadRequest;
 import alekssandher.free_library.dto.response.ErrorResponses.Conflict;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
@@ -76,17 +76,17 @@ public class AuthController {
     )
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Login successful and token generated.",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = GetResponse.class))),
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class))),
         @ApiResponse(responseCode = "400", description = "Malformed request.",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequest.class)))
     })
     @PostMapping("/login")
-    public ResponseEntity<GetResponse<String>> login( @Valid @RequestBody final UserLoginDto dto, HttpServletRequest request )
+    public ResponseEntity<OkResponse<String>> login( @Valid @RequestBody final UserLoginDto dto, HttpServletRequest request )
     {
         var model = queryService.validateCredentials(dto.email(), dto.password());
         String token = jwtService.generateToken(model);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<String>(token, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<String>(token, request));
     }
 
 }

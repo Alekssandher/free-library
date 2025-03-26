@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import alekssandher.free_library.dto.rating.BookRatingResponseDto;
 import alekssandher.free_library.dto.response.ApiResponseDto.CreatedResponse;
-import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
+import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.BadRequest;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
@@ -57,12 +57,12 @@ public class BookRatingController {
 
     @Operation(summary = "Get book ratings", description = "Retrieves the average rating and count of ratings for a given book.")
     @ApiResponse(responseCode = "200", description = "Ratings retrieved successfully",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = GetResponse.class)))
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
     @ApiResponse(responseCode = "404", description = "Book not found",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
     @GetMapping("{bookPublicId}")
-    public ResponseEntity<GetResponse<BookRatingResponseDto>> getRatings(@PathVariable Long bookPublicId, HttpServletRequest request) {
+    public ResponseEntity<OkResponse<BookRatingResponseDto>> getRatings(@PathVariable Long bookPublicId, HttpServletRequest request) {
         var result = service.getRatings(bookPublicId);
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<>(result, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<>(result, request));
     }
 }

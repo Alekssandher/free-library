@@ -7,13 +7,22 @@ import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.book.BookResponseDto;
 import alekssandher.free_library.entities.book.BookEntity;
 import alekssandher.free_library.entities.user.UserEntity;
+import alekssandher.free_library.utils.Snowflake;
 
 @Component
 public class BookMapper {
+
+    private final Snowflake snowflake;
+
+    public BookMapper(Snowflake snowflake)
+    {
+        this.snowflake = snowflake;
+    }
     
     public BookEntity toBookEntity(BookRequestDto dto, UserEntity user)
     {
         return new BookEntity(
+            snowflake.nextId(),
             dto.title(),
             dto.author(),
             dto.description(),

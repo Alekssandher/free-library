@@ -4,7 +4,6 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.time.LocalDateTime;
 
-import alekssandher.free_library.config.SnowFlakeSing;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,7 +55,7 @@ public class UserEntity {
 
     public UserEntity() {}
 
-    public UserEntity(String name, String email, String hashedPassword) {
+    public UserEntity(String name, String email, String hashedPassword, Long publicId) {
         this.name = name;
         this.email = email;
         this.password = hashedPassword;
@@ -64,7 +63,7 @@ public class UserEntity {
         this.isVerified = false;
         this.createdAt = LocalDateTime.now();
         this.role = "USER";
-        this.publicId = SnowFlakeSing.getInstance().nextId();
+        this.publicId = publicId;
     }
 
 }

@@ -8,16 +8,25 @@ import org.springframework.stereotype.Component;
 import alekssandher.free_library.dto.user.UserRequestDto;
 import alekssandher.free_library.dto.user.UserResponseDto;
 import alekssandher.free_library.entities.user.UserEntity;
+import alekssandher.free_library.utils.Snowflake;
 
 @Component
 public class UserMapper {
+
+    private final Snowflake snowflake;
+
+    public UserMapper(Snowflake snowflake)
+    {
+        this.snowflake = snowflake;
+    }
 
     public UserEntity toUserEntity(UserRequestDto dto)
     {
         return new UserEntity(
             dto.name().trim(), 
             dto.email().trim().toLowerCase(), 
-            dto.password()
+            dto.password(),
+            snowflake.nextId()
         );
     }   
 

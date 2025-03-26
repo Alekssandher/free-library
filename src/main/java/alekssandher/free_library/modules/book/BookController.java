@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import alekssandher.free_library.dto.book.BookRequestDto;
 import alekssandher.free_library.dto.book.BookResponseDto;
 import alekssandher.free_library.dto.response.ApiResponseDto.CreatedResponse;
-import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
+import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.BadRequest;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
@@ -49,9 +49,9 @@ public class BookController {
 
     @Operation(summary = "Find books", description = "Retrieves a list of books that match the given query.")
     @ApiResponse(responseCode = "200", description = "Books retrieved successfully", 
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = GetResponse.class)))
+                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
     @GetMapping()
-    public ResponseEntity<GetResponse<List<BookResponseDto>>> getBooks(
+    public ResponseEntity<OkResponse<List<BookResponseDto>>> getBooks(
         @RequestParam(required = false, defaultValue = "") String title,
         @RequestParam(required = false, defaultValue = "") String author,
         @RequestParam(required = false, defaultValue = "") String category,
@@ -62,7 +62,7 @@ public class BookController {
     {
         var result = service.listBooks(title, author, category, page, size);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseDto>>(result, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<List<BookResponseDto>>(result, request));
     }
     @Operation(summary = "Create book", description = "Create a book with the infos given and id of file uploaded in /api/pdfs route.")
     @ApiResponses({

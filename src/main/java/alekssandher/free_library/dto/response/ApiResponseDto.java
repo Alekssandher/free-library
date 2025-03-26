@@ -46,7 +46,7 @@ public class ApiResponseDto {
         }
     }
     
-    public static class GetResponse<T> extends ApiResponse<T> {
+    public static class OkResponse<T> extends ApiResponse<T> {
         @Schema(example = "200")
         private final int status = HttpStatus.OK.value();
 
@@ -68,7 +68,7 @@ public class ApiResponseDto {
         @Schema(example = "2024-03-25T14:30:00")
         private final LocalDateTime timestamp = LocalDateTime.now();
 
-        public GetResponse(T data, HttpServletRequest request) {
+        public OkResponse(T data, HttpServletRequest request) {
             super(
                 HttpStatus.OK.value(),
                 "https://datatracker.ietf.org/doc/html/rfc9110#name-200-ok",

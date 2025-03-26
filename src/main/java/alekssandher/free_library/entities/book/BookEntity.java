@@ -4,17 +4,16 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.time.LocalDateTime;
 
-import alekssandher.free_library.config.SnowFlakeSing;
 import alekssandher.free_library.entities.user.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.persistence.ForeignKey;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,9 +67,9 @@ public class BookEntity {
 
     public BookEntity() {}
 
-    public BookEntity(String title, String author, String description, String language, String publisher, String category, Short plubishedAt, Long fileId, UserEntity uploadedBy)
+    public BookEntity(Long publicId, String title, String author, String description, String language, String publisher, String category, Short plubishedAt, Long fileId, UserEntity uploadedBy)
     {
-        this.publicId = SnowFlakeSing.getInstance().nextId();
+        this.publicId = publicId;
         this.title = title;
         this.author = author;
         this.description = description;

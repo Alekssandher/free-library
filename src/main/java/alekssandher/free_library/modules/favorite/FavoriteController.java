@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import alekssandher.free_library.dto.book.BookResponseDto;
 import alekssandher.free_library.dto.response.ApiResponseDto.CreatedResponse;
-import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
+import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
 import alekssandher.free_library.interfaces.favorite.IFavoriteService;
@@ -47,15 +47,15 @@ public class FavoriteController {
     @Operation(summary = "Get all favorite books", description = "Fetch the list of books marked as favorites by the user.")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of favorites",
                  content = @Content(mediaType = "application/json", 
-                                    schema = @Schema(implementation = GetResponse.class)))
+                                    schema = @Schema(implementation = OkResponse.class)))
     @GetMapping()
-    public ResponseEntity<GetResponse<List<BookResponseDto>>> getFavorites(HttpServletRequest request)
+    public ResponseEntity<OkResponse<List<BookResponseDto>>> getFavorites(HttpServletRequest request)
     {
         String jwt = request.getHeader("Authorization");
 
         List<BookResponseDto> result = service.getFavorites(jwt);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new GetResponse<List<BookResponseDto>>(result, request));
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<List<BookResponseDto>>(result, request));
     }
 
     @Operation(summary = "Add a book to favorites", description = "Add a book to the authenticated user's favorites.")
