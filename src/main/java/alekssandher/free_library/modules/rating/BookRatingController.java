@@ -30,8 +30,10 @@ import jakarta.servlet.http.HttpServletRequest;
 @SecurityRequirement(name = "Authorization")
 @Tag(name = "Book Rating", description = "Endpoints to manage books")
 @ApiResponses({
-    @ApiResponse(responseCode = "500", description = "Internal server error",
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class)))
+        @ApiResponse(responseCode = "500", description = "Internal server error",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class))),
+        @ApiResponse(responseCode = "403", description = "Unauthorized",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class)))
 })
 public class BookRatingController {
     private final IBookRatingService service;
@@ -46,8 +48,6 @@ public class BookRatingController {
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreatedResponse.class)))
     @ApiResponse(responseCode = "400", description = "Invalid rating value",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequest.class)))
-    @ApiResponse(responseCode = "403", description = "Unauthorized",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class)))
     @PostMapping("{bookPublicId}/{rating}")
     public ResponseEntity<CreatedResponse<Void>> rateBook(@PathVariable Long bookPublicId, @PathVariable int rating, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");

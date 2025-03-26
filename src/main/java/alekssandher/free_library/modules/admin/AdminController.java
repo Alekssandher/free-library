@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import alekssandher.free_library.dto.book.BookResponseAdminDto;
 import alekssandher.free_library.dto.response.ApiResponseDto.GetResponse;
+import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
 import alekssandher.free_library.dto.response.ErrorResponses.NotFound;
 import alekssandher.free_library.dto.user.UserResponseDto;
@@ -31,8 +32,10 @@ import jakarta.servlet.http.HttpServletRequest;
 @SecurityRequirement(name = "Authorization")
 @Tag(name = "Admin", description = "Endpoints for users/book admin management.")
 @ApiResponses({
-    @ApiResponse(responseCode = "500", description = "Internal server error",
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class)))
+        @ApiResponse(responseCode = "500", description = "Internal server error",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class))),
+        @ApiResponse(responseCode = "403", description = "Unauthorized",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class)))
 })
 public class AdminController {
     private final AdminService service;
@@ -72,14 +75,16 @@ public class AdminController {
     }
 
     @Operation(summary = "Delete a book", description = "Deletes a book by its public ID.")
-    @ApiResponse(responseCode = "200", description = "Book deleted successfully")
+    @ApiResponse(responseCode = "204", description = "Book deleted successfully.",
+                 content = @Content(mediaType = "application/json", 
+                                    schema = @Schema(implementation = Void.class)))
     @ApiResponse(responseCode = "404", description = "Book not found", 
                  content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
     @DeleteMapping("books/{bookPublicId}")
     public ResponseEntity<String> deleteBookByPublicId(@PathVariable Long bookPublicId)
     {
         service.deleteBook(bookPublicId);
-        return ResponseEntity.ok("Deleted");
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Change user status", description = "Activates or deactivates a user by their public ID.")

@@ -1,21 +1,44 @@
 package alekssandher.free_library.dto.response;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.HttpStatus;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class ErrorResponses {
     public static class InternalErrorCustom extends ErrorDetails {
+        @Schema(example = "500")
+        private final int status = HttpStatus.INTERNAL_SERVER_ERROR.value();
+    
+        @Schema(example = "Internal Server Error")
+        private final String title = "Internal Error";
+    
+        @Schema(example = "An unexpected error occurred on our server. Please try again later.")
+        private final String detail;
+    
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.500")
+        private final String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.500";
+    
+        @Schema(example = "/api/users/123")
+        private final String instance;
+    
+        @Schema(example = "2024-03-25T12:15:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+    
         public InternalErrorCustom(HttpServletRequest request) {
             super(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Internal Error",
-                "Something went wrong at our side",
+                "An unexpected error occurred on our server. Please try again later.",
                 "https://datatracker.ietf.org/doc/html/rfc9110#status.500",
                 request.getRequestURI()
             );
+            this.detail = "An unexpected error occurred on our server. Please try again later.";
+            this.instance = request.getRequestURI();
         }
-
+    
         public InternalErrorCustom(HttpServletRequest request, String detail) {
             super(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -24,35 +47,88 @@ public class ErrorResponses {
                 "https://datatracker.ietf.org/doc/html/rfc9110#status.500",
                 request.getRequestURI()
             );
+            this.detail = detail;
+            this.instance = request.getRequestURI();
         }
     }
     
     public static class BadRequest extends ErrorDetails {
-        public BadRequest(HttpServletRequest request, String title, String detail) {
-            super(
-                HttpStatus.BAD_REQUEST.value(),
-                title != null ? title : "Bad Request",
-                detail != null ? detail : "Request Malformed",
-                "https://datatracker.ietf.org/doc/html/rfc9110#status.400",
-                request.getRequestURI()
-            );
+        @Schema(example = "400")
+        private final int status = HttpStatus.BAD_REQUEST.value();
+
+        @Schema(example = "Bad Request")
+        private final String title = "Bad Request";
+
+        @Schema(example = "O 'email' field is required and can't be empty.")
+        private final String detail;
+
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.400")
+        private final static String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.400";
+
+        @Schema(example = "/api/auth")
+        private final String instance;
+
+        @Schema(example = "2024-03-25T12:00:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+
+        public BadRequest(HttpServletRequest request, String detail) {
+            super(HttpStatus.BAD_REQUEST.value(), "Bad Request", detail, type, request.getRequestURI());
+            this.detail = detail;
+            this.instance = request.getRequestURI();
         }
     }
     
     public static class Conflict extends ErrorDetails {
-        public Conflict(HttpServletRequest request, String detail)
-        {
+        @Schema(example = "409")
+        private final int status = HttpStatus.CONFLICT.value();
+    
+        @Schema(example = "Conflict")
+        private final String title = "Conflict";
+    
+        @Schema(example = "This operation could not be completed due to a resource conflict.")
+        private final String detail;
+    
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.409")
+        private final String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.409";
+    
+        @Schema(example = "/api/orders/987")
+        private final String instance;
+    
+        @Schema(example = "2024-03-25T14:30:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+    
+        public Conflict(HttpServletRequest request, String detail) {
             super(
-                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.CONFLICT.value(),
                 "Conflict",
-                detail != null ? detail : "Operation Not Authorized by a conflict",
+                detail != null ? detail : "This operation could not be completed due to a resource conflict.",
                 "https://datatracker.ietf.org/doc/html/rfc9110#status.409",
                 request.getRequestURI()
             );
+            this.detail = detail != null ? detail : "This operation could not be completed due to a resource conflict.";
+            this.instance = request.getRequestURI();
         }
     }
 
     public static class Forbidden extends ErrorDetails {
+        @Schema(example = "403")
+        private final int status = HttpStatus.FORBIDDEN.value();
+
+        @Schema(example = "Forbidden")
+        private final String title = "Forbidden";
+
+        @Schema(example = "You do not have permission to access this resource.")
+        private final String detail;
+
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.403")
+        private final String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.403";
+
+        @Schema(example = "/api/books/")
+        private final String instance;
+
+        @Schema(example = "2024-03-25T12:10:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+
         public Forbidden(HttpServletRequest request) {
             super(
                 HttpStatus.FORBIDDEN.value(),
@@ -61,42 +137,66 @@ public class ErrorResponses {
                 "https://datatracker.ietf.org/doc/html/rfc9110#status.403",
                 request.getRequestURI()
             );
+            this.detail = "You do not have permission to access this resource.";
+            this.instance = request.getRequestURI();
         }
     }
 
     public static class NotFound extends ErrorDetails {
-        public NotFound(HttpServletRequest request, String title, String detail) {
-            super(
-                HttpStatus.NOT_FOUND.value(),
-                title != null ? title : "Not Found",
-                detail != null ? detail : "We Couldn't Find Your Request.",
-                "https://datatracker.ietf.org/doc/html/rfc9110#status.404",
-                request.getRequestURI()
-            );
-        }
-    }
-    
-    public class ContentTooLarge extends ErrorDetails {
-        public ContentTooLarge(HttpServletRequest request, String title, String detail) {
-            super(
-                HttpStatus.URI_TOO_LONG.value(),
-                title != null ? title : "Request Too Long",
-                detail != null ? detail : "Too Long Requisition.",
-                "https://datatracker.ietf.org/doc/html/rfc9110#status.414",
-                request.getRequestURI()
-            );
+        @Schema(example = "404")
+        private final int status = HttpStatus.NOT_FOUND.value();
+
+        @Schema(example = "Not Found")
+        private final String title = "Not Found";
+
+        @Schema(example = "Book not found with ID: 19832103123312.")
+        private final String detail;
+
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.404")
+        private final static String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.404";
+
+        @Schema(example = "/api/books/")
+        private final String instance;
+
+        @Schema(example = "2024-03-25T12:05:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+
+        public NotFound(HttpServletRequest request,String detail) {
+            super(HttpStatus.NOT_FOUND.value(), "Not Found", detail, type, request.getRequestURI());
+            this.detail = detail;
+            this.instance = request.getRequestURI();
         }
     }
     
     public class TooManyRequests extends ErrorDetails {
+        @Schema(example = "429")
+        private final int status = HttpStatus.TOO_MANY_REQUESTS.value();
+    
+        @Schema(example = "Too Many Requests")
+        private final String title = "Too Many Requests";
+    
+        @Schema(example = "You have exceeded the request limit. Please wait 60 seconds before trying again.")
+        private final String detail;
+    
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc6585#section-4")
+        private final String type = "https://datatracker.ietf.org/doc/html/rfc6585#section-4";
+    
+        @Schema(example = "/api/login")
+        private final String instance;
+    
+        @Schema(example = "2024-03-25T14:30:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+    
         public TooManyRequests(HttpServletRequest request, String title, String detail) {
             super(
                 HttpStatus.TOO_MANY_REQUESTS.value(),
                 title != null ? title : "Too Many Requests",
-                detail != null ? detail : "You are under cooldown or rate limit, try again later.",
+                detail != null ? detail : "You have exceeded the request limit. Please wait 60 seconds before trying again.",
                 "https://datatracker.ietf.org/doc/html/rfc6585#section-4",
                 request.getRequestURI()
             );
+            this.detail = detail != null ? detail : "You have exceeded the request limit. Please wait 60 seconds before trying again.";
+            this.instance = request.getRequestURI();
         }
     }
     

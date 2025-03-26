@@ -28,14 +28,14 @@ public class GlobalExceptionHandler
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorDetails> handleCustomException(NotFoundException ex, HttpServletRequest request)
     {
-        ErrorDetails error = new NotFound(request, "Not Found", ex.getMessage());
+        ErrorDetails error = new NotFound(request, ex.getMessage());
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorDetails> handleCustomException(BadRequestException ex, HttpServletRequest request)
     {
-        ErrorDetails error = new BadRequest(request, "Bad Request", ex.getMessage());
+        ErrorDetails error = new BadRequest(request,  ex.getMessage());
         return ResponseEntity.status(error.getStatus()).body(error);
     }
 
@@ -80,20 +80,20 @@ public class GlobalExceptionHandler
     public ResponseEntity<ErrorDetails> handleTypeMismatch(MethodArgumentTypeMismatchException ex, HttpServletRequest request) 
     {
         String message = String.format("The param '%s' must be of kind %s.", ex.getName(), ex.getRequiredType().getSimpleName());
-        ErrorDetails error = new BadRequest(request, "Bad Request", message);
+        ErrorDetails error = new BadRequest(request,  message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(DateTimeException.class)
     public ResponseEntity<ErrorDetails> handleDateTimeException(DateTimeException ex, HttpServletRequest request) {
-        ErrorDetails error = new BadRequest(request, "Bad Request", "Invalid data format.");
+        ErrorDetails error = new BadRequest(request,  "Invalid data format.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorDetails> handleNoResourceFoundException(NoResourceFoundException ex, HttpServletRequest request)
     {
-        ErrorDetails error = new BadRequest(request, "Bad Request", "A required value is missing from path.");
+        ErrorDetails error = new BadRequest(request, "A required value is missing from path.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
@@ -105,7 +105,7 @@ public class GlobalExceptionHandler
                                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                                 .collect(Collectors.toList());
 
-        ErrorDetails error = new BadRequest(request, "Validation Error", String.join("; ", errors));
+        ErrorDetails error = new BadRequest(request, String.join("; ", errors));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -123,7 +123,7 @@ public class GlobalExceptionHandler
             message = String.join("; ", errors);
         }
 
-        ErrorDetails error = new BadRequest(request, "JSON Parsing Error", message);
+        ErrorDetails error = new BadRequest(request, message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

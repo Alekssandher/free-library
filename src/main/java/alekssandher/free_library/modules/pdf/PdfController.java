@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import alekssandher.free_library.dto.response.ApiResponseDto.CreatedResponse;
+import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
 import alekssandher.free_library.interfaces.pdf.IPdfService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,8 +29,10 @@ import jakarta.servlet.http.HttpServletRequest;
 @SecurityRequirement(name = "Authorization")
 @Tag(name = "Pdfs", description = "Endpoint to upload pdf to cloud.")
 @ApiResponses({
-    @ApiResponse(responseCode = "500", description = "Internal server error",
-                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class)))
+        @ApiResponse(responseCode = "500", description = "Internal server error",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class))),
+        @ApiResponse(responseCode = "403", description = "Unauthorized",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class)))
 })
 public class PdfController {
     private final IPdfService service;
