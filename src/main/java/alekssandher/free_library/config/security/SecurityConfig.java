@@ -21,10 +21,12 @@ import alekssandher.free_library.modules.auth.JwtService;
 public class SecurityConfig {
     private final JwtService jwtService;
     private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfig(JwtService jwtService, CustomAccessDeniedHandler accessDeniedHandler) {
+    public SecurityConfig(JwtService jwtService, CustomAccessDeniedHandler accessDeniedHandler, CustomAuthenticationEntryPoint authenticationEntryPoint) {
         this.jwtService = jwtService;
         this.accessDeniedHandler = accessDeniedHandler;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Bean
@@ -35,7 +37,10 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasRole("MANAGER")
                 .anyRequest().authenticated() 
             )
-            .exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler))
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
+                )
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); 
 

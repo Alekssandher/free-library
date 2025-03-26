@@ -8,7 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class ErrorResponses {
-    public static class InternalErrorCustom extends ErrorDetails {
+    public static class InternalErrorCustom extends ErrorDetails 
+    {
         @Schema(example = "500")
         private final int status = HttpStatus.INTERNAL_SERVER_ERROR.value();
     
@@ -52,7 +53,8 @@ public class ErrorResponses {
         }
     }
     
-    public static class BadRequest extends ErrorDetails {
+    public static class BadRequest extends ErrorDetails 
+    {
         @Schema(example = "400")
         private final int status = HttpStatus.BAD_REQUEST.value();
 
@@ -78,7 +80,8 @@ public class ErrorResponses {
         }
     }
     
-    public static class Conflict extends ErrorDetails {
+    public static class Conflict extends ErrorDetails 
+    {
         @Schema(example = "409")
         private final int status = HttpStatus.CONFLICT.value();
     
@@ -110,7 +113,41 @@ public class ErrorResponses {
         }
     }
 
-    public static class Forbidden extends ErrorDetails {
+    public static class Unauthorized extends ErrorDetails 
+    {
+        @Schema(example = "401")
+        private final int status = HttpStatus.UNAUTHORIZED.value();
+
+        @Schema(example = "Unauthorized")
+        private final String title = "Unauthorized";
+
+        @Schema(example = "You do not have permission to access this resource.")
+        private final String detail;
+
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.401")
+        private final String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.401";
+
+        @Schema(example = "/api/books/")
+        private final String instance;
+
+        @Schema(example = "2024-03-25T12:10:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+
+        public Unauthorized(HttpServletRequest request) {
+            super(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Unauthorized",
+                "You do not have permission to access this resource.",
+                "https://datatracker.ietf.org/doc/html/rfc9110#status.401",
+                request.getRequestURI()
+            );
+            this.detail = "You do not have permission to access this resource.";
+            this.instance = request.getRequestURI();
+        }
+    }
+
+    public static class Forbidden extends ErrorDetails 
+    {
         @Schema(example = "403")
         private final int status = HttpStatus.FORBIDDEN.value();
 
@@ -142,7 +179,8 @@ public class ErrorResponses {
         }
     }
 
-    public static class NotFound extends ErrorDetails {
+    public static class NotFound extends ErrorDetails 
+    {
         @Schema(example = "404")
         private final int status = HttpStatus.NOT_FOUND.value();
 
@@ -168,7 +206,8 @@ public class ErrorResponses {
         }
     }
     
-    public class TooManyRequests extends ErrorDetails {
+    public class TooManyRequests extends ErrorDetails 
+    {
         @Schema(example = "429")
         private final int status = HttpStatus.TOO_MANY_REQUESTS.value();
     
