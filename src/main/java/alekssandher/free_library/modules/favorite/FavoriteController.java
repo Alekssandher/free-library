@@ -27,6 +27,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("favorites")
@@ -69,7 +70,7 @@ public class FavoriteController {
                  content = @Content(mediaType = "application/json", 
                                     schema = @Schema(implementation = CreatedResponse.class)))
     @PostMapping("{bookPublicId}")
-    public ResponseEntity<CreatedResponse<Void>> addFavorite(@PathVariable Long bookPublicId, HttpServletRequest request)
+    public ResponseEntity<CreatedResponse<Void>> addFavorite(@Valid @PathVariable Long bookPublicId, HttpServletRequest request)
     {
         String jwt = request.getHeader("Authorization");
         service.addFavoriteBook(bookPublicId, jwt);
@@ -82,7 +83,7 @@ public class FavoriteController {
                  content = @Content(mediaType = "application/json", 
                                     schema = @Schema(implementation = Void.class)))
     @PatchMapping("{bookPublicId}")
-    public ResponseEntity<Void> removeFavorite(@PathVariable Long bookPublicId, HttpServletRequest request)
+    public ResponseEntity<Void> removeFavorite(@Valid @PathVariable Long bookPublicId, HttpServletRequest request)
     {
         String jwt = request.getHeader("Authorization");
         service.removeFavorite(bookPublicId, jwt);

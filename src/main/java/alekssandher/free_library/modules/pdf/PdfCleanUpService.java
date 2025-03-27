@@ -28,7 +28,6 @@ public class PdfCleanUpService {
     }
 
     @Scheduled(fixedRate = 1800000)
-
     public void cleanUpOldPdfs() throws Exception
     {
 
