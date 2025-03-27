@@ -64,6 +64,7 @@ public class BookController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<List<BookResponseDto>>(result, request));
     }
+    
     @Operation(summary = "Create book", description = "Create a book with the infos given and id of file uploaded in /api/pdfs route.")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Book successfully created.",
