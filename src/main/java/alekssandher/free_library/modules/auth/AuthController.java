@@ -12,6 +12,7 @@ import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.BadRequest;
 import alekssandher.free_library.dto.response.ErrorResponses.Conflict;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
+import alekssandher.free_library.dto.response.ErrorResponses.MethodNotAllowed;
 import alekssandher.free_library.dto.user.UserRequestDto;
 import alekssandher.free_library.mappers.UserMapper;
 import alekssandher.free_library.modules.users.UserQueryService;
@@ -30,7 +31,9 @@ import jakarta.validation.Valid;
 @Tag(name = "Auth", description = "Endpoint to register/login.")
 @ApiResponses({
         @ApiResponse(responseCode = "500", description = "Internal server error",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class)))
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class))),
+        @ApiResponse(responseCode = "405", description = "Mehod Not Allowed",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = MethodNotAllowed.class)))
 })
 public class AuthController {
     private final UserQueryService queryService;

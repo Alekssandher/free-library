@@ -14,7 +14,9 @@ import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.BadRequest;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
+import alekssandher.free_library.dto.response.ErrorResponses.MethodNotAllowed;
 import alekssandher.free_library.dto.response.ErrorResponses.NotFound;
+import alekssandher.free_library.dto.response.ErrorResponses.Unauthorized;
 import alekssandher.free_library.interfaces.rating.IBookRatingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,7 +35,11 @@ import jakarta.servlet.http.HttpServletRequest;
         @ApiResponse(responseCode = "500", description = "Internal server error",
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class))),
         @ApiResponse(responseCode = "403", description = "Unauthorized",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class)))
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Unauthorized.class))),
+        @ApiResponse(responseCode = "401", description = "Forbidden",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class))),
+        @ApiResponse(responseCode = "405", description = "Mehod Not Allowed",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = MethodNotAllowed.class)))
 })
 public class BookRatingController {
     private final IBookRatingService service;

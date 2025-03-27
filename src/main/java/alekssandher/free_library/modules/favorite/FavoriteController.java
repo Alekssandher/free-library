@@ -16,6 +16,8 @@ import alekssandher.free_library.dto.response.ApiResponseDto.CreatedResponse;
 import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
+import alekssandher.free_library.dto.response.ErrorResponses.MethodNotAllowed;
+import alekssandher.free_library.dto.response.ErrorResponses.Unauthorized;
 import alekssandher.free_library.interfaces.favorite.IFavoriteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +36,11 @@ import jakarta.servlet.http.HttpServletRequest;
         @ApiResponse(responseCode = "500", description = "Internal server error",
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = InternalErrorCustom.class))),
         @ApiResponse(responseCode = "403", description = "Unauthorized",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class)))
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Unauthorized.class))),
+        @ApiResponse(responseCode = "401", description = "Forbidden",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Forbidden.class))),
+        @ApiResponse(responseCode = "405", description = "Mehod Not Allowed",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = MethodNotAllowed.class)))
 })
 public class FavoriteController {
     private final IFavoriteService service;
