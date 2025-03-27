@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -122,8 +123,16 @@ public class GlobalExceptionHandler
 
             message = String.join("; ", errors);
         }
-
+        
         ErrorDetails error = new BadRequest(request, message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorDetails> handleWrongMethodException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request)
+    {
+        var error = new BadRequest(request, ex.getMessage());
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }   
 }
