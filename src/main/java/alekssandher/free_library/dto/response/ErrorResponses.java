@@ -61,7 +61,7 @@ public class ErrorResponses {
         @Schema(example = "Bad Request")
         private final String title = "Bad Request";
 
-        @Schema(example = "O 'email' field is required and can't be empty.")
+        @Schema(example = "The 'email' field is required and can't be empty.")
         private final String detail;
 
         @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.400")
@@ -75,6 +75,33 @@ public class ErrorResponses {
 
         public BadRequest(HttpServletRequest request, String detail) {
             super(HttpStatus.BAD_REQUEST.value(), "Bad Request", detail, type, request.getRequestURI());
+            this.detail = detail;
+            this.instance = request.getRequestURI();
+        }
+    }
+
+    public static class MethodNotAllowed extends ErrorDetails 
+    {
+        @Schema(example = "405")
+        private final int status = HttpStatus.BAD_REQUEST.value();
+
+        @Schema(example = "Method Not Allowed")
+        private final String title = "Method Not Allowed";
+
+        @Schema(example = "Request method 'GET' is not supported")
+        private final String detail;
+
+        @Schema(example = "https://datatracker.ietf.org/doc/html/rfc9110#status.405")
+        private final static String type = "https://datatracker.ietf.org/doc/html/rfc9110#status.405";
+
+        @Schema(example = "/api/auth")
+        private final String instance;
+
+        @Schema(example = "2024-03-25T12:00:00")
+        private final LocalDateTime timestamp = LocalDateTime.now();
+
+        public MethodNotAllowed(HttpServletRequest request, String detail) {
+            super(HttpStatus.METHOD_NOT_ALLOWED.value(), "Method Not Allowed", detail, type, request.getRequestURI());
             this.detail = detail;
             this.instance = request.getRequestURI();
         }

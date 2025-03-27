@@ -131,8 +131,8 @@ public class GlobalExceptionHandler
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorDetails> handleWrongMethodException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request)
     {
-        var error = new BadRequest(request, ex.getMessage());
-        
+        var error = new MethodNotAllowed(request, ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }   
 }
