@@ -11,9 +11,11 @@ public interface IAdminService {
 
     List<UserResponseDto> findUsersByName(String name);
 
+    UserResponseDto findUserById(Long id);
+
     void chageActiveUserStatus(Long userPublicId, Boolean kind);
 
     List<BookResponseAdminDto> listBooks(String title, String author, String category, int page, int size);
-
+    
 
 }

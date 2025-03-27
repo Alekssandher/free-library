@@ -70,6 +70,13 @@ public class AdminService implements IAdminService {
     }
 
     @Override
+    public UserResponseDto findUserById(Long id) {
+        var user = userRepository.findByPublicId(id).orElseThrow(() -> new NotFoundException("User not found with ID: ".formatted(id)));
+
+        return userMapper.toUserResponseDto(user);
+    }
+
+    @Override
     public void chageActiveUserStatus(Long userPublicId, Boolean kind) {
         UserEntity user = userRepository.findByPublicId(userPublicId).orElseThrow(() -> new NotFoundException("User not found"));
 
@@ -94,5 +101,7 @@ public class AdminService implements IAdminService {
 
         return result.stream().map(bookMapper::toResponseAdminDto).toList();
     }
+
+   
     
 }

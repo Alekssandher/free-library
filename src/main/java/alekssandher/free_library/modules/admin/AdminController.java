@@ -55,12 +55,25 @@ public class AdminController {
     @Operation(summary = "Find users by name", description = "Retrieves a list of users that match the given name.")
     @ApiResponse(responseCode = "200", description = "Users retrieved successfully", 
                  content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
-    @GetMapping("users/{name}")
-    public ResponseEntity<OkResponse<List<UserResponseDto>>> findUsersByName(@Valid @PathVariable String name, HttpServletRequest request)
+    @GetMapping("users")
+    public ResponseEntity<OkResponse<List<UserResponseDto>>> findUsersByName(@Valid @RequestParam(defaultValue = "") String name, HttpServletRequest request)
     {
         var result = service.findUsersByName(name);
 
         return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<List<UserResponseDto>>(result, request));
+    }
+
+    @Operation(summary = "Find user by id", description = "Retrieves the user that match the given ID.")
+    @ApiResponse(responseCode = "200", description = "Users retrieved successfully", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = OkResponse.class)))
+    @ApiResponse(responseCode = "404", description = "User not found with the given ID.", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
+    @GetMapping("users/{id}")
+    public ResponseEntity<OkResponse<UserResponseDto>> findUserById(@Valid @PathVariable Long id, HttpServletRequest request)
+    {
+        var result = service.findUserById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new OkResponse<UserResponseDto>(result, request));
     }
 
     @Operation(summary = "Get books", description = "Retrieves a list of books based on optional filters: title, author, and category.")
