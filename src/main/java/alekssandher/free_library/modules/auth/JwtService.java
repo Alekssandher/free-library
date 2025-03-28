@@ -21,9 +21,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 import alekssandher.free_library.entities.user.UserEntity;
 import alekssandher.free_library.exception.Exceptions.BadRequestException;
+import alekssandher.free_library.interfaces.jwt.IJwtService;
 
 @Service
-public class JwtService {
+public class JwtService implements IJwtService {
 
     private final String secret;
     private final String emissor;

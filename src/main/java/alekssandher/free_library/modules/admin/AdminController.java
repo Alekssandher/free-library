@@ -20,6 +20,7 @@ import alekssandher.free_library.dto.response.ErrorResponses.MethodNotAllowed;
 import alekssandher.free_library.dto.response.ErrorResponses.NotFound;
 import alekssandher.free_library.dto.response.ErrorResponses.Unauthorized;
 import alekssandher.free_library.dto.user.UserResponseDto;
+import alekssandher.free_library.interfaces.admin.IAdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,9 +46,9 @@ import jakarta.validation.Valid;
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = MethodNotAllowed.class)))
 })
 public class AdminController {
-    private final AdminService service;
+    private final IAdminService service;
 
-    public AdminController(AdminService service)
+    public AdminController(IAdminService service)
     {   
         this.service = service;
     }

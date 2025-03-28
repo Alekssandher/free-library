@@ -21,7 +21,8 @@ public class UserQueryService implements IUserQueryService {
     }
 
     @Override
-    public void verifyEmail(String email) throws ConflictException {
+    public void verifyEmail(String email)
+    {
         if(repository.existsByEmail(email))
         {
             var message = "The email %s is already in use.".formatted(email);
@@ -33,13 +34,15 @@ public class UserQueryService implements IUserQueryService {
     }
 
     @Override
-    public UserEntity findById(long id) throws NotFoundException {
+    public UserEntity findById(long id)
+    {
         
         return repository.findById(id).orElseThrow(() -> new NotFoundException("User not found with id: %s".formatted(id)));
     }
 
     @Override
-    public UserEntity validateCredentials(String email, String password) throws BadRequestException {
+    public UserEntity validateCredentials(String email, String password)
+    {
         var model = repository.findByEmail(email);
         var message = "The email or password provided is wrong.";
         if(model == null)
@@ -58,7 +61,8 @@ public class UserQueryService implements IUserQueryService {
     }
 
     @Override
-    public UserEntity findUserByEmail(String email) throws NotFoundException {
+    public UserEntity findUserByEmail(String email)
+    {
         var user = repository.findByEmail(email);
         if (user == null)
         {

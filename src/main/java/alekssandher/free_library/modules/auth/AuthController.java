@@ -14,9 +14,10 @@ import alekssandher.free_library.dto.response.ErrorResponses.Conflict;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
 import alekssandher.free_library.dto.response.ErrorResponses.MethodNotAllowed;
 import alekssandher.free_library.dto.user.UserRequestDto;
+import alekssandher.free_library.interfaces.jwt.IJwtService;
+import alekssandher.free_library.interfaces.user.IUserQueryService;
+import alekssandher.free_library.interfaces.user.IUserService;
 import alekssandher.free_library.mappers.UserMapper;
-import alekssandher.free_library.modules.users.UserQueryService;
-import alekssandher.free_library.modules.users.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,13 +37,13 @@ import jakarta.validation.Valid;
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = MethodNotAllowed.class)))
 })
 public class AuthController {
-    private final UserQueryService queryService;
-    private final UserService service;
+    private final IUserQueryService queryService;
+    private final IUserService service;
     private final UserMapper mapper;
-    private final JwtService jwtService;
+    private final IJwtService jwtService;
  
 
-    public AuthController(UserService service, UserMapper mapper, JwtService jwtService, UserQueryService queryService)
+    public AuthController(IUserService service, UserMapper mapper, IJwtService jwtService, IUserQueryService queryService)
     {
         this.queryService = queryService;
         this.service = service;

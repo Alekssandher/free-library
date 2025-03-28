@@ -1,17 +1,13 @@
 package alekssandher.free_library.interfaces.user;
 
-import org.apache.coyote.BadRequestException;
-
 import alekssandher.free_library.entities.user.UserEntity;
-import alekssandher.free_library.exception.Exceptions.ConflictException;
-import alekssandher.free_library.exception.Exceptions.NotFoundException;
 
 public interface IUserQueryService {
-    void verifyEmail(final String email) throws ConflictException;
+    void verifyEmail(final String email);
 
-    UserEntity findById(long id) throws NotFoundException;
+    UserEntity findById(long id);
 
-    UserEntity validateCredentials(String email, String password) throws BadRequestException;
+    UserEntity validateCredentials(String email, String password);
 
-    UserEntity findUserByEmail(String email) throws NotFoundException;
+    UserEntity findUserByEmail(String email);
 }
