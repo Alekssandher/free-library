@@ -30,6 +30,7 @@ public record BookRequestDto(
 
     @Min(value = 1, message = "Year must be greater than 1")
     @Max(value = 2100, message = "Year must be less than 2100")
+    @NotBlank(message = "Publisher is required")
     Short publishedAt,
 
     @NotNull(message = "File ID is required")

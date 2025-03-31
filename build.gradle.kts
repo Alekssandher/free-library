@@ -42,7 +42,7 @@ dependencies {
 	implementation("com.auth0:java-jwt:4.5.0")
 
 	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44
-	implementation("com.cloudinary:cloudinary-http44:1.39.0")
+	implementation("com.cloudinary:cloudinary-http44:1.34.0")
 
 	compileOnly("org.projectlombok:lombok")
 
@@ -81,7 +81,7 @@ tasks.register("generateFlywayMigrationFile"){
 		}
 
 		val migrationNameFromConsole = project.findProperty("migrationName") as String?
-			?: throw IllegalArgumentException("Você deve fornecer um nome para a migração usando o parâmetro -PmigrationName=<nome>.")
+			?: throw IllegalArgumentException("You should provide a name for the migration with the parameter -PmigrationName=<nome>.")
 
 		val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
 		val migrationName = "V${timestamp}__${migrationNameFromConsole}.sql"

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import alekssandher.free_library.dto.book.BookResponseDto;
 import alekssandher.free_library.entities.user.UserFavoriteEntity;
 import alekssandher.free_library.exception.Exceptions.BadRequestException;
+import alekssandher.free_library.exception.Exceptions.ConflictException;
 import alekssandher.free_library.exception.Exceptions.NotFoundException;
 import alekssandher.free_library.interfaces.favorite.IFavoriteService;
 import alekssandher.free_library.mappers.BookMapper;
@@ -62,7 +63,7 @@ public class FavoriteService implements IFavoriteService {
 
         if(favoriteRepository.deleteByUserIdAndBookId(user.getId(), book.getId()) == 0)
         {
-            throw new BadRequestException("The book provided is not in your favorites.");
+            throw new ConflictException("The book provided is not in your favorites.");
         }
         
     }

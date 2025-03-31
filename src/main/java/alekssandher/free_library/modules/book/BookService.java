@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import alekssandher.free_library.dto.book.BookRequestDto;
 import alekssandher.free_library.dto.book.BookResponseDto;
 import alekssandher.free_library.interfaces.book.IBookService;
+import alekssandher.free_library.interfaces.jwt.IJwtService;
+import alekssandher.free_library.interfaces.pdf.IPdfService;
 import alekssandher.free_library.mappers.BookMapper;
-import alekssandher.free_library.modules.auth.JwtService;
-import alekssandher.free_library.modules.pdf.PdfService;
 import alekssandher.free_library.repository.IBookRepository;
 import alekssandher.free_library.repository.IUserRepository;
 
@@ -21,13 +21,13 @@ public class BookService implements IBookService {
 
     private final IBookRepository repository;
     private final IUserRepository userRepository;
-    private final PdfService pdfService;
+    private final IPdfService pdfService;
 
-    private final JwtService jwtService;
+    private final IJwtService jwtService;
     private final BookMapper mapper;
 
 
-    public BookService(IBookRepository repository, BookMapper mapper, JwtService jwtService, IUserRepository userRepository, PdfService pdfService)
+    public BookService(IBookRepository repository, BookMapper mapper, IJwtService jwtService, IUserRepository userRepository, IPdfService pdfService)
     {
         this.repository = repository;
         this.mapper = mapper;
@@ -59,5 +59,6 @@ public class BookService implements IBookService {
 
         return result.stream().map(mapper::toResponseDto).toList();
     }
+
 
 }

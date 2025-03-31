@@ -17,6 +17,7 @@ import alekssandher.free_library.dto.response.ApiResponseDto.OkResponse;
 import alekssandher.free_library.dto.response.ErrorResponses.Forbidden;
 import alekssandher.free_library.dto.response.ErrorResponses.InternalErrorCustom;
 import alekssandher.free_library.dto.response.ErrorResponses.MethodNotAllowed;
+import alekssandher.free_library.dto.response.ErrorResponses.NotFound;
 import alekssandher.free_library.dto.response.ErrorResponses.Unauthorized;
 import alekssandher.free_library.interfaces.favorite.IFavoriteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,8 +68,9 @@ public class FavoriteController {
 
     @Operation(summary = "Add a book to favorites", description = "Add a book to the authenticated user's favorites.")
     @ApiResponse(responseCode = "201", description = "Successfully added the book to favorites",
-                 content = @Content(mediaType = "application/json", 
-                                    schema = @Schema(implementation = CreatedResponse.class)))
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreatedResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Book not found.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
     @PostMapping("{bookPublicId}")
     public ResponseEntity<CreatedResponse<Void>> addFavorite(@Valid @PathVariable Long bookPublicId, HttpServletRequest request)
     {
@@ -80,8 +82,9 @@ public class FavoriteController {
 
     @Operation(summary = "Remove a book from favorites", description = "Remove a book from the authenticated user's favorites.")
     @ApiResponse(responseCode = "204", description = "Successfully removed the book from favorites",
-                 content = @Content(mediaType = "application/json", 
-                                    schema = @Schema(implementation = Void.class)))
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)))
+    @ApiResponse(responseCode = "404", description = "Book not found.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)))
     @PatchMapping("{bookPublicId}")
     public ResponseEntity<Void> removeFavorite(@Valid @PathVariable Long bookPublicId, HttpServletRequest request)
     {

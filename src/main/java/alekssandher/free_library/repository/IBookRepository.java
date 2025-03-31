@@ -12,6 +12,9 @@ import alekssandher.free_library.entities.book.BookEntity;
 @Repository
 public interface IBookRepository extends JpaRepository<BookEntity, Long>{
     Optional<BookEntity> findByPublicId(Long publicId);
+    
+    Optional<BookEntity> findByFileId(Long fileId);
+
     void deleteBookByPublicId(Long bookPublicId);
 
     Page<BookEntity> findByTitleContainingIgnoreCaseAndAuthorContainingIgnoreCaseAndCategoryContainingIgnoreCase(
